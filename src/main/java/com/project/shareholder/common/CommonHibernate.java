@@ -35,7 +35,34 @@ public abstract class CommonHibernate<T> implements CommonHibernateInterface<Ser
 
     @Override
     public void updateObj(Serializable t) {
+        if (t instanceof CommonSerialize) {
+            // Set instance's updated date
+            Timestamp currentTime = new Timestamp(new Date().getTime());
+            ((CommonSerialize) t).setDateUpdatedAt(currentTime);
+        }
+
         sessionFactory.getCurrentSession().update(t);
+    }
+
+    @Override
+    public void deactivateObj(Serializable t) {
+        if (t instanceof CommonSerialize) {
+            // Set instance active
+            ((CommonSerialize) t).setActive(false);
+
+            // Set instance's deleted date
+            Timestamp currentTime = new Timestamp(new Date().getTime());
+            ((CommonSerialize) t).setDateDeletedAt(currentTime);
+        }
+
+        sessionFactory.getCurrentSession().update(t);
+    }
+
+    @Override
+    public void deactivateObjs(Collection<T> objs) {
+        for(T obj : objs) {
+            this.deactivateObj((Serializable) obj);
+        }
     }
 
     @Override

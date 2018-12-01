@@ -21,6 +21,18 @@ public interface CommonHibernateInterface<Serializable, T> {
     public void updateObj(Serializable t);
 
     /**
+     * Deactivate object from DB
+     * @param t
+     */
+    public void deactivateObj(Serializable t);
+
+    /**
+     * Deactivate objects from DB
+     * @param objs
+     */
+    public void deactivateObjs(Collection<T> objs);
+
+    /**
      * Delete object from DB
      * @param t
      */
