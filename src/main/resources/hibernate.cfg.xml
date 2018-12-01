@@ -12,7 +12,9 @@
         <property name="hibernate.connection.password">admin</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5433/shareholder</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
+
         <property name="hibernate.connection.pool_size">1</property>
+
         <property name="hibernate.c3p0.min_size">5</property>
         <property name="hibernate.c3p0.max_size">20</property>
         <property name="hibernate.c3p0.acquire_increment">2</property>

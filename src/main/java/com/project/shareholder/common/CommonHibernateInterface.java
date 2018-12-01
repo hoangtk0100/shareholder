@@ -44,7 +44,7 @@ public interface CommonHibernateInterface<Serializable, T> {
      * @return
      * @throws DatabaseException
      */
-    public T findObjById(Long id) throws DatabaseException;
+    public T findObjById(UUID id) throws DatabaseException;
 
     /**
      * Get table name in DB

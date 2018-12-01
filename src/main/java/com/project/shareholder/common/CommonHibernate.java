@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.TypedQuery;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,11 +20,14 @@ public abstract class CommonHibernate<T> implements CommonHibernateInterface<Ser
     private SessionFactory sessionFactory;
 
     @Override
-    public void saveObj(Serializable t) {
-        if(t instanceof CommonSerialize) {
-            if(((CommonSerialize) t).getId().isEmpty() || ((CommonSerialize) t).getId().isEmpty()) {
-                ((CommonSerialize) t).setId(UUID.randomUUID());
-            }
+    public void saveObj (Serializable t) {
+        if (t instanceof CommonSerialize) {
+            // Set instance active
+            ((CommonSerialize) t).setActive(true);
+
+            // Set instance's created date
+            Timestamp currentTime = new Timestamp(new Date().getTime());
+            ((CommonSerialize) t).setDateCreatedAt(currentTime);
         }
 
         sessionFactory.getCurrentSession().save(t);
@@ -55,7 +60,7 @@ public abstract class CommonHibernate<T> implements CommonHibernateInterface<Ser
     }
 
     @Override
-    public T findObjById(Long id) throws DatabaseException {
+    public T findObjById(UUID id) throws DatabaseException {
         // Create object class of parameter Type first.
         Class<T> persistentClass = (Class<T>)
                 ((ParameterizedType) getClass().getGenericSuperclass())

@@ -13,12 +13,6 @@ public class Utility {
 
     private static final String ERROR_MESSAGE_DELIMITER = ";";
 
-    private static final String LETTER_LIST = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    private static final String NUMBER_LIST = "1234567890";
-    private static final String SYMBOL_LIST = "!@$%^*";
-    private static final String WORD_LIST = LETTER_LIST + NUMBER_LIST;
-    private static final String CHAR_LIST = WORD_LIST + SYMBOL_LIST;
-
     /**
      * Validate errors
      *
@@ -37,7 +31,7 @@ public class Utility {
     }
 
     /**
-     * Va
+     * UUID Validator
      * */
     public static boolean isEmptyUUID(UUID uuid) {
         return uuid.toString() == "00000000-0000-0000-0000-000000000000";
