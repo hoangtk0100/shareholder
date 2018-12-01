@@ -20,7 +20,7 @@ public abstract class CommonHibernate<T> implements CommonHibernateInterface<Ser
     private SessionFactory sessionFactory;
 
     @Override
-    public void saveObj (Serializable t) {
+    public void createObj (Serializable t) {
         if (t instanceof CommonSerialize) {
             // Set instance active
             ((CommonSerialize) t).setActive(true);
@@ -53,14 +53,14 @@ public abstract class CommonHibernate<T> implements CommonHibernateInterface<Ser
     }
 
     @Override
-    public List<T> findAll() {
+    public List<T> retrieveAll() {
         String queryString = "from " + getTableName();
         TypedQuery<T> query = sessionFactory.getCurrentSession().createQuery(queryString);
         return query.getResultList();
     }
 
     @Override
-    public T findObjById(UUID id) throws DatabaseException {
+    public T retrieveObjById(UUID id) throws DatabaseException {
         // Create object class of parameter Type first.
         Class<T> persistentClass = (Class<T>)
                 ((ParameterizedType) getClass().getGenericSuperclass())
@@ -74,13 +74,13 @@ public abstract class CommonHibernate<T> implements CommonHibernateInterface<Ser
     }
 
     @Override
-    public void shutdown(Serializable t) {
-        sessionFactory.getCurrentSession().close();
+    public Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     @Override
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
+    public void shutdown(Serializable t) {
+        sessionFactory.getCurrentSession().close();
     }
 }
 
