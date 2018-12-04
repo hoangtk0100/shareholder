@@ -18,6 +18,7 @@ import java.util.UUID;
                              @UniqueConstraint(columnNames = {"id"})
         }
 )
+
 public class PersonShareStage extends CommonSerialize {
 
     @Id
@@ -42,7 +43,6 @@ public class PersonShareStage extends CommonSerialize {
     @Column(name = "date_ended_at")
     private Timestamp dateEndedAt;
 
-    @NotNull
     @Column(name = "note")
     private String note;
 

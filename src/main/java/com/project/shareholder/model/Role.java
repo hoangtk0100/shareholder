@@ -12,6 +12,7 @@ import java.util.UUID;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})
         }
 )
+
 public class Role extends CommonSerialize {
 
     @Id

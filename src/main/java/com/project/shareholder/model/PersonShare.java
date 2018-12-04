@@ -14,7 +14,9 @@ import java.util.UUID;
                              @UniqueConstraint(columnNames = {"person_id", "stage_id"})
         }
 )
+
 public class PersonShare extends CommonSerialize {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,7 +26,6 @@ public class PersonShare extends CommonSerialize {
     @Column(name = "stock_quantity")
     private double stockQuantity;
 
-    @NotNull
     @Column(name = "note")
     private String note;
 

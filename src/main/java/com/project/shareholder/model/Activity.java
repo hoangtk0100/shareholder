@@ -13,6 +13,7 @@ import java.util.UUID;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})
         }
 )
+
 public class Activity extends CommonSerialize {
 
     @Id

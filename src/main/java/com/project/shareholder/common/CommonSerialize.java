@@ -3,13 +3,14 @@ package com.project.shareholder.common;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @MappedSuperclass
 public class CommonSerialize implements Serializable {
 
     @Column(name = "active")
-    private Boolean active = false;
+    private Boolean active;
 
     @Column(name = "date_created_at")
     private Timestamp dateCreatedAt;

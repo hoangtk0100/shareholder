@@ -39,7 +39,6 @@ public class Stage extends CommonSerialize {
     @Column(name = "date_ended_at")
     private Timestamp dateEndedAt;
 
-    @NotNull
     @Column(name = "note")
     private String note;
 

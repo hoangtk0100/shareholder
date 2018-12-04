@@ -16,6 +16,7 @@ import java.util.UUID;
         uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})
         }
 )
+
 public class Profit extends CommonSerialize {
 
     @Id

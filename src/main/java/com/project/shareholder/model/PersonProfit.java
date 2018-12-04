@@ -15,6 +15,7 @@ import java.util.UUID;
                              @UniqueConstraint(columnNames = {"person_id"})
         }
 )
+
 public class PersonProfit extends CommonSerialize {
 
     @Id
@@ -34,8 +35,8 @@ public class PersonProfit extends CommonSerialize {
     private Profit profit;
 
     @NotNull
-    @Column(name = "period_profit")
-    private Timestamp periodProfit;
+    @Column(name = "profit")
+    private double periodProfit;
 
     // Getter and setter methods
     public UUID getId() {
@@ -62,11 +63,11 @@ public class PersonProfit extends CommonSerialize {
         this.profit = profit;
     }
 
-    public Timestamp getPeriodProfit() {
+    public double getPeriodProfit() {
         return periodProfit;
     }
 
-    public void setPeriodProfit(Timestamp periodProfit) {
+    public void setPeriodProfit(double periodProfit) {
         this.periodProfit = periodProfit;
     }
 }
