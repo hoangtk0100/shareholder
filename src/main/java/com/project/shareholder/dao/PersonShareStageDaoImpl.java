@@ -2,7 +2,6 @@ package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
 import com.project.shareholder.exception.DatabaseException;
-import com.project.shareholder.model.PersonShare;
 import com.project.shareholder.model.PersonShareStage;
 import com.project.shareholder.util.*;
 import org.hibernate.query.Query;
