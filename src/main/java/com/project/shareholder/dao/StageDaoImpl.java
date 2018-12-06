@@ -1,8 +1,7 @@
 package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
-import com.project.shareholder.exception.DatabaseException;
-import com.project.shareholder.model.Person;
+import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Stage;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
@@ -14,26 +13,26 @@ import java.util.UUID;
 public class StageDaoImpl extends CommonHibernate<Stage> implements StageDao {
 
     @Override
-    public Stage retrieveById(UUID id) throws DatabaseException {
+    public Stage retrieveById(UUID id) throws NotFoundException {
         String sql = "from stage s where s.id = :id";
         try {
             Query query = getCurrentSession().createQuery(sql, Stage.class)
                     .setParameter("id", id);
             return (Stage) query.getSingleResult();
         } catch (Exception exception) {
-            throw new DatabaseException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.DATABASE_MESSAGE);
         }
     }
 
     @Override
-    public Stage retrieveByName(String name) throws DatabaseException {
+    public Stage retrieveByName(String name) throws NotFoundException {
         String sql = "from stage s where s.name = :name";
         try {
             Query query = getCurrentSession().createQuery(sql, Stage.class)
                     .setParameter("name", name);
             return (Stage) query.getSingleResult();
         } catch (Exception exception) {
-            throw new DatabaseException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.DATABASE_MESSAGE);
         }
     }
 
