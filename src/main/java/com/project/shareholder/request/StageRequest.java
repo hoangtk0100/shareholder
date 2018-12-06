@@ -1,49 +1,28 @@
-package com.project.shareholder.model;
+package com.project.shareholder.request;
 
-import com.project.shareholder.common.CommonSerialize;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.UUID;
 
-@Entity
-@Table(name = "stage",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})
-        }
-)
-
-public class Stage extends CommonSerialize {
-
-    @Id
-    @Column(name = "id")
-    @GenericGenerator(name = "id_generator", strategy = "com.project.shareholder.util.UUIDGenerator")
-    @GeneratedValue(generator = "id_generator", strategy = GenerationType.SEQUENCE)
+public class StageRequest {
+    @NotNull(message = "Id must not be null")
     private UUID id;
 
-    @NotNull
-    @Column(name = "name")
+    @NotBlank(message = "Name must not be empty")
     private String name;
 
-    @NotNull
-    @Column(name = "stock_quantity")
+    @NotBlank(message = "Stock quantity must not be empty")
     private double quantity;
 
-    @NotNull
-    @Column(name = "date_started_at")
+    @NotBlank(message = "Start date must not be empty")
     private Timestamp dateStartedAt;
 
-    @NotNull
-    @Column(name = "date_ended_at")
+    @NotBlank(message = "End date must not be empty")
     private Timestamp dateEndedAt;
 
-    @Column(name = "note")
     private String note;
-
-    @OneToMany(mappedBy = "stage", fetch = FetchType.EAGER)
-    private List<PersonShareStage> personShareStages;
 
     // Getter and setter methods
     public String getId() {
@@ -92,13 +71,5 @@ public class Stage extends CommonSerialize {
 
     public void setNote(String note) {
         this.note = note;
-    }
-
-    public List<PersonShareStage> getPersonShareStages() {
-        return personShareStages;
-    }
-
-    public void setPersonShareStages(List<PersonShareStage> personShareStages) {
-        this.personShareStages = personShareStages;
     }
 }

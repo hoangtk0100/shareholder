@@ -3,7 +3,6 @@ package com.project.shareholder.common;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @MappedSuperclass
