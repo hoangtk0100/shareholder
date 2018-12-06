@@ -21,7 +21,7 @@ public interface RoleService {
     Role delete(RoleRequest roleRequest) throws DatabaseException;
 
     // Retrieve role by name
-    Role retrieveByName(String name) throws NotFoundException, DatabaseException;
+    Role retrieveByName(String name) throws NotFoundException;
 
     // Retrieve all role
     List<Role> list();

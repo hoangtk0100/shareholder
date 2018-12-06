@@ -1,6 +1,7 @@
 package com.project.shareholder.service;
 
 import com.project.shareholder.exception.DatabaseException;
+import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Stage;
 import com.project.shareholder.request.StageRequest;
 
@@ -20,7 +21,7 @@ public interface StageService {
     Stage delete(StageRequest stageRequest) throws DatabaseException;
 
     // Retrieve stage by id
-    Stage retrieveById(StageRequest stageRequest) throws DatabaseException;
+    Stage retrieveById(StageRequest stageRequest) throws NotFoundException;
 
     // Retrieve all stages
     List<Stage> list();

@@ -2,6 +2,7 @@ package com.project.shareholder.service;
 
 import com.project.shareholder.dao.StageDao;
 import com.project.shareholder.exception.DatabaseException;
+import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Stage;
 import com.project.shareholder.request.StageRequest;
 import com.project.shareholder.util.Constants;
@@ -81,7 +82,7 @@ public class StageServiceImpl implements StageService {
     }
 
     @Override
-    public Stage retrieveById(StageRequest stageRequest) throws DatabaseException {
+    public Stage retrieveById(StageRequest stageRequest) throws NotFoundException {
         return stageDao.retrieveById(UUID.fromString(stageRequest.getId()));
     }
 

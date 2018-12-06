@@ -79,7 +79,7 @@ public class RoleServiceImpl implements RoleService {
 
     // Retrieve role by name
     @Override
-    public Role retrieveByName(String name) throws NotFoundException, DatabaseException {
+    public Role retrieveByName(String name) throws NotFoundException {
         return roleDao.retrieveByName(name);
     }
 
