@@ -49,6 +49,18 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
     }
 
     @Override
+    public Person retrieveByPersonalId(String personalId) throws NotFoundException {
+        String sql = "from person p where p.personal_id = :personalId";
+        try {
+            Query query = getCurrentSession().createQuery(sql, Person.class)
+                    .setParameter("personalId", personalId);
+            return (Person) query.getSingleResult();
+        } catch (Exception exception) {
+            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+        }
+    }
+
+    @Override
     public String getTableName() {
         return "Person";
     }

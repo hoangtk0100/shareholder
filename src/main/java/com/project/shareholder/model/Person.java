@@ -74,10 +74,13 @@ public class Person extends CommonSerialize {
     @Column(name = "total_profit")
     private double totalProfit;
 
+    @Column(name = "referer_username")
+    private String refererUsername;
+
     @JsonIgnore
     @OneToMany(mappedBy = "persons", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Person> persons;
+    private List<Person> referrals;
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -203,12 +206,20 @@ public class Person extends CommonSerialize {
         this.totalProfit = totalProfit;
     }
 
-    public List<Person> getPersons() {
-        return persons;
+    public String getRefererUsername() {
+        return refererUsername;
     }
 
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
+    public void setRefererUsername(String refererUsername) {
+        this.refererUsername = refererUsername;
+    }
+
+    public List<Person> getReferrals() {
+        return referrals;
+    }
+
+    public void setReferrals(List<Person> referrals) {
+        this.referrals = referrals;
     }
 
     public List<PersonShare> getPersonShares() {

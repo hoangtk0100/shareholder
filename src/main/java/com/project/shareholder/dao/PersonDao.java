@@ -16,4 +16,7 @@ public interface PersonDao extends CommonHibernateInterface<Serializable, Person
 
     // Retrieve person by username
     Person retrieveByUsername(String username) throws NotFoundException;
+
+    // Retrieve person by personal id
+    Person retrieveByPersonalId(String personalId) throws NotFoundException;
 }
