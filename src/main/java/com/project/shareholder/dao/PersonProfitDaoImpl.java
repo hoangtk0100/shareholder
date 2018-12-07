@@ -5,10 +5,12 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.PersonProfit;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.time.YearMonth;
 import java.util.UUID;
 
+@Repository
 public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implements PersonProfitDao {
     @Override
     public PersonProfit retrieveById(UUID id) throws NotFoundException {

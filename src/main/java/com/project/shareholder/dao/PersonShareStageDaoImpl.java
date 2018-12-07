@@ -5,9 +5,11 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.PersonShareStage;
 import com.project.shareholder.util.*;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+@Repository
 public class PersonShareStageDaoImpl extends CommonHibernate<PersonShareStage> implements PersonShareStageDao {
     @Override
     public PersonShareStage retrieveById(UUID id) throws NotFoundException {

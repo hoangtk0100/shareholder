@@ -78,7 +78,7 @@ public class Person extends CommonSerialize {
     private String refererUsername;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "persons", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "referrals", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Person> referrals;
 

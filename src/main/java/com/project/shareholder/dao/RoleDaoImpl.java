@@ -5,9 +5,11 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Role;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+@Repository
 public class RoleDaoImpl extends CommonHibernate<Role> implements RoleDao {
     @Override
     public Role retrieveById(UUID id) throws NotFoundException {

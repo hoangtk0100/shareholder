@@ -144,9 +144,9 @@ public class PersonServiceImpl implements PersonService {
             referer= personDao.retrieveByUsername(personRequest.getReferralUsername());
             Person referral = personDao.retrieveById(UUID.fromString(personRequest.getId()));
 
-            List<Person> persons = referer.getPersons();
+            List<Person> persons = referer.getReferrals();
             persons.add(referral);
-            referer.setPersons(persons);
+            referer.setReferrals(persons);
             personDao.updateObj(referer);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);

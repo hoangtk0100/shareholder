@@ -5,9 +5,11 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.PersonShare;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+@Repository
 public class PersonShareDaoImpl extends CommonHibernate<PersonShare> implements PersonShareDao {
     @Override
     public PersonShare retrieveById(UUID id) throws NotFoundException {

@@ -5,9 +5,11 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Activity;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+@Repository
 public class ActivityDaoImpl extends CommonHibernate<Activity> implements ActivityDao {
     @Override
     public Activity retrieveById(UUID id) throws NotFoundException {
