@@ -81,7 +81,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Boolean deactivate(String id) throws DatabaseException {
+    public Person deactivate(String id) throws DatabaseException {
         Person person;
         try {
             person = personDao.retrieveById(UUID.fromString(id));
@@ -90,14 +90,15 @@ public class PersonServiceImpl implements PersonService {
             }
 
             personDao.deactivateObj(person);
-            return true;
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
+
+        return person;
     }
 
     @Override
-    public Boolean delete(String id) throws DatabaseException {
+    public String delete(String id) throws DatabaseException {
         Person person;
         try {
             person = personDao.retrieveById(UUID.fromString(id));
@@ -106,10 +107,11 @@ public class PersonServiceImpl implements PersonService {
             }
 
             personDao.deleteObj(person);
-            return true;
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
+
+        return id;
     }
 
     @Override
@@ -139,7 +141,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person addReferral(PersonRequest personRequest) throws DatabaseException {
-        Person referer = new Person();
+        Person referer;
         try {
             referer= personDao.retrieveByUsername(personRequest.getReferralUsername());
             Person referral = personDao.retrieveById(UUID.fromString(personRequest.getId()));

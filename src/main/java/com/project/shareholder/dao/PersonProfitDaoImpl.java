@@ -37,6 +37,18 @@ public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implement
     }
 
     @Override
+    public PersonProfit retrieveByProfitId(UUID profitId) throws NotFoundException {
+        String sql = "from person_profit p where p.profit_id = :profitId";
+        try {
+            Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
+                    .setParameter("profitId", profitId);
+            return (PersonProfit) query.getResultList();
+        } catch (Exception exception) {
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+        }
+    }
+
+    @Override
     public PersonProfit retrieveByPeriod(YearMonth period) throws NotFoundException {
         String sql = "from person_profit p where month(p.period)= month(:period) and year(p.period) = year(:period)";
         try {
@@ -55,6 +67,19 @@ public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implement
             Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
                     .setParameter("personId", personId)
                     .setParameter("period", period);
+            return (PersonProfit) query.getSingleResult();
+        } catch (Exception exception) {
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+        }
+    }
+
+    @Override
+    public PersonProfit retrieveByPersonProfit(UUID personId, UUID profitId) throws NotFoundException {
+        String sql = "from person_profit p where p.person_id = :personId and p.profit_id = :profitId";
+        try {
+            Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
+                    .setParameter("personId", personId)
+                    .setParameter("profitId", profitId);
             return (PersonProfit) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);

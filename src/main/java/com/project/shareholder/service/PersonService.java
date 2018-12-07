@@ -15,10 +15,10 @@ public interface PersonService {
     Person update(PersonRequest personRequest) throws DatabaseException, NotFoundException;
 
     // Deactivate person
-    Boolean deactivate(String id) throws DatabaseException;
+    Person deactivate(String id) throws DatabaseException;
 
     // Delete person
-    Boolean delete(String id) throws DatabaseException;
+    String delete(String id) throws DatabaseException;
 
     // Retrieve person by id
     Person retrieveById(String id) throws NotFoundException;

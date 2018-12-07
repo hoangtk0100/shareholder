@@ -15,9 +15,15 @@ public interface PersonProfitDao extends CommonHibernateInterface<Serializable, 
     // Retrieve person's profit by person id
     PersonProfit retrieveByPersonId(UUID personId) throws NotFoundException;
 
+    // Retrieve person's profit by profit id
+    PersonProfit retrieveByProfitId(UUID profitId) throws NotFoundException;
+
     // Retrieve person's profit by period
     PersonProfit retrieveByPeriod(YearMonth period) throws NotFoundException;
 
     // Retrieve person's profit by person - period
     PersonProfit retrieveByPersonPeriod(UUID personId, YearMonth period) throws NotFoundException;
+
+    // Retrieve person's profit by person - profit
+    PersonProfit retrieveByPersonProfit(UUID personId, UUID profitId) throws NotFoundException;
 }
