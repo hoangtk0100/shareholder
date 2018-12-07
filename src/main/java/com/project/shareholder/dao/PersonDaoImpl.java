@@ -20,7 +20,7 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
                     .setParameter("id", id);
             return (Person) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -32,7 +32,7 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
                     .setParameter("phoneNumber", phoneNumber);
             return (Person) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -44,7 +44,7 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
                     .setParameter("username", username);
             return (Person) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -56,7 +56,7 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
                     .setParameter("personalId", personalId);
             return (Person) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 

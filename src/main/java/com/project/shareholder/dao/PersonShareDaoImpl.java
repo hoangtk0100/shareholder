@@ -19,7 +19,7 @@ public class PersonShareDaoImpl extends CommonHibernate<PersonShare> implements 
                     .setParameter("id", id);
             return (PersonShare) query.getResultList();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -31,7 +31,7 @@ public class PersonShareDaoImpl extends CommonHibernate<PersonShare> implements 
                     .setParameter("id", personId);
             return (PersonShare) query.getResultList();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -43,7 +43,7 @@ public class PersonShareDaoImpl extends CommonHibernate<PersonShare> implements 
                     .setParameter("stageId", stageId);
             return (PersonShare) query.getResultList();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -56,7 +56,7 @@ public class PersonShareDaoImpl extends CommonHibernate<PersonShare> implements 
                     .setParameter("stageId", stageId);
             return (PersonShare) query.getResultList();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 

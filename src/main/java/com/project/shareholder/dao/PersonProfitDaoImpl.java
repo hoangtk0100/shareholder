@@ -20,7 +20,7 @@ public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implement
                     .setParameter("id", id);
             return (PersonProfit) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -32,7 +32,7 @@ public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implement
                     .setParameter("personId", personId);
             return (PersonProfit) query.getResultList();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -44,7 +44,7 @@ public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implement
                     .setParameter("period", period);
             return (PersonProfit) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -57,7 +57,7 @@ public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implement
                     .setParameter("period", period);
             return (PersonProfit) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 

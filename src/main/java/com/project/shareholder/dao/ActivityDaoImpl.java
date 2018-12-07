@@ -19,7 +19,7 @@ public class ActivityDaoImpl extends CommonHibernate<Activity> implements Activi
                     .setParameter("id", id);
             return (Activity) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -31,7 +31,7 @@ public class ActivityDaoImpl extends CommonHibernate<Activity> implements Activi
                     .setParameter("personId", personId);
             return (Activity) query.getResultList();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 

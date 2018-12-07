@@ -20,7 +20,7 @@ public class ProfitDaoImpl extends CommonHibernate<Profit> implements ProfitDao 
                     .setParameter("id", id);
             return (Profit) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -32,7 +32,7 @@ public class ProfitDaoImpl extends CommonHibernate<Profit> implements ProfitDao 
                     .setParameter("period", period);
             return (Profit) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 

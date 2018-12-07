@@ -20,7 +20,7 @@ public class StageDaoImpl extends CommonHibernate<Stage> implements StageDao {
                     .setParameter("id", id);
             return (Stage) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -32,7 +32,7 @@ public class StageDaoImpl extends CommonHibernate<Stage> implements StageDao {
                     .setParameter("name", name);
             return (Stage) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 

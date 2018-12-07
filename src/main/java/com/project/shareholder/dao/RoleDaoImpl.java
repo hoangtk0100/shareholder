@@ -19,7 +19,7 @@ public class RoleDaoImpl extends CommonHibernate<Role> implements RoleDao {
                     .setParameter("id", id);
             return (Role) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
@@ -31,7 +31,7 @@ public class RoleDaoImpl extends CommonHibernate<Role> implements RoleDao {
                     .setParameter("name", name);
             return (Role) query.getSingleResult();
         } catch (Exception exception) {
-            throw new NotFoundException(Constants.DATABASE_MESSAGE);
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
