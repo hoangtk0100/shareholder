@@ -1,6 +1,7 @@
 package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
+import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Person;
 import com.project.shareholder.util.Constants;
@@ -57,6 +58,31 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
             return (Person) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+        }
+    }
+
+    @Override
+    public double retrieveTotalStock(UUID id) throws NotFoundException {
+        String sql = "select total_stock from person p where p.id = :id";
+        try {
+            Query query = getCurrentSession().createQuery(sql, Person.class)
+                    .setParameter("id", id);
+            return (double) query.getSingleResult();
+        } catch (Exception exception) {
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+        }
+    }
+
+    @Override
+    public void updateTotalStock(UUID id, double stockQuantity) throws DatabaseException {
+        String sql = "update person set total_stock = :stockQuantity where id = :id";
+        try {
+            Query query = getCurrentSession().createQuery(sql, Person.class)
+                    .setParameter("id", id)
+                    .setParameter("stockQuantity", stockQuantity);
+             query.executeUpdate();
+        } catch (Exception exception) {
+            throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
     }
 

@@ -1,6 +1,7 @@
 package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernateInterface;
+import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Person;
 
@@ -19,4 +20,10 @@ public interface PersonDao extends CommonHibernateInterface<Serializable, Person
 
     // Retrieve person by personal id
     Person retrieveByPersonalId(String personalId) throws NotFoundException;
+
+    // Retrieve person total shares
+    double retrieveTotalStock(UUID id) throws NotFoundException;
+
+    // Update total shares
+    void updateTotalStock(UUID id, double stockQuantity) throws DatabaseException;
 }
