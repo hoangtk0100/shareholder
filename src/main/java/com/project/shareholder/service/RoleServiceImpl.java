@@ -65,16 +65,16 @@ public class RoleServiceImpl implements RoleService {
 
     // Delete role
     @Override
-    public Role delete(RoleRequest roleRequest) throws DatabaseException {
+    public String delete(String id) throws DatabaseException {
         Role role = new Role();
-        role.setId(UUID.fromString(roleRequest.getId()));
+        role.setId(UUID.fromString(id));
         try {
             roleDao.deleteObj(role);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
 
-        return role;
+        return id;
     }
 
     // Retrieve role by name

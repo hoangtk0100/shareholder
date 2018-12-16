@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "role",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name"})
         }
 )
 

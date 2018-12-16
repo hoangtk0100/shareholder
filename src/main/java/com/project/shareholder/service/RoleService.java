@@ -7,7 +7,7 @@ import com.project.shareholder.request.RoleRequest;
 
 import java.util.List;
 
-public interface RoleService {
+public interface    RoleService {
     // Create a new role
     Role create(RoleRequest roleRequest) throws DatabaseException;
 
@@ -18,7 +18,7 @@ public interface RoleService {
     Role deactivate(RoleRequest roleRequest) throws DatabaseException;
 
     // Delete role
-    Role delete(RoleRequest roleRequest) throws DatabaseException;
+    String delete(String id) throws DatabaseException;
 
     // Retrieve role by name
     Role retrieveByName(String name) throws NotFoundException;
