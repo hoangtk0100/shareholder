@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,11 +34,11 @@ public class Stage extends CommonSerialize {
 
     @NotNull
     @Column(name = "date_started_at")
-    private Timestamp dateStartedAt;
+    private Date dateStartedAt;
 
     @NotNull
     @Column(name = "date_ended_at")
-    private Timestamp dateEndedAt;
+    private Date dateEndedAt;
 
     @Column(name = "note")
     private String note;
@@ -70,19 +71,19 @@ public class Stage extends CommonSerialize {
         this.quantity = quantity;
     }
 
-    public Timestamp getDateStartedAt() {
+    public Date getDateStartedAt() {
         return dateStartedAt;
     }
 
-    public void setDateStartedAt(Timestamp dateStartedAt) {
+    public void setDateStartedAt(Date dateStartedAt) {
         this.dateStartedAt = dateStartedAt;
     }
 
-    public Timestamp getDateEndedAt() {
+    public Date getDateEndedAt() {
         return dateEndedAt;
     }
 
-    public void setDateEndedAt(Timestamp dateEndedAt) {
+    public void setDateEndedAt(Date dateEndedAt) {
         this.dateEndedAt = dateEndedAt;
     }
 

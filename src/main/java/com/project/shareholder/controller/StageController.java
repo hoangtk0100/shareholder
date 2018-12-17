@@ -12,7 +12,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.YearMonth;
 import java.util.List;
 
 @RestController
@@ -70,8 +69,8 @@ public class StageController {
     }
 
     // Retrieve stage by period
-    @GetMapping("/showByPeriod/{id}")
-    public Stage retrieveByPeriod(@PathVariable YearMonth period) throws NotFoundException {
+    @GetMapping("/showByPeriod/{period}")
+    public Stage retrieveByPeriod(@PathVariable String period) throws NotFoundException {
         return stageService.retrieveByPeriod(period);
     }
 }

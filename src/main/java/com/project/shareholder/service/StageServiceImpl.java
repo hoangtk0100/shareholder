@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.YearMonth;
 import java.util.List;
 import java.util.UUID;
 
@@ -95,7 +94,7 @@ public class StageServiceImpl implements StageService {
     }
 
     @Override
-    public Stage retrieveByPeriod(YearMonth period) throws NotFoundException {
+    public Stage retrieveByPeriod(String period) throws NotFoundException {
         return stageDao.retrieveByPeriod(period);
     }
 

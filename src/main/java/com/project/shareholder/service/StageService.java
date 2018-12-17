@@ -5,7 +5,6 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Stage;
 import com.project.shareholder.request.StageRequest;
 
-import java.time.YearMonth;
 import java.util.List;
 
 public interface StageService {
@@ -25,7 +24,7 @@ public interface StageService {
     Stage retrieveById(String id) throws NotFoundException;
 
     // Retrieve stage by period
-    Stage retrieveByPeriod(YearMonth period) throws NotFoundException;
+    Stage retrieveByPeriod(String period) throws NotFoundException;
 
     // Retrieve all stages
     List<Stage> list();

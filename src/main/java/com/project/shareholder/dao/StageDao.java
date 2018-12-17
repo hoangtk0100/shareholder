@@ -5,7 +5,6 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Stage;
 
 import java.io.Serializable;
-import java.time.YearMonth;
 import java.util.UUID;
 
 public interface StageDao extends CommonHibernateInterface<Serializable, Stage> {
@@ -16,5 +15,5 @@ public interface StageDao extends CommonHibernateInterface<Serializable, Stage> 
     Stage retrieveByName(String name) throws NotFoundException;
 
     // Retrieve stage by period
-    Stage retrieveByPeriod(YearMonth period) throws NotFoundException;
+    Stage retrieveByPeriod(String period) throws NotFoundException;
 }

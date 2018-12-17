@@ -8,7 +8,8 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
-
+import java.text.SimpleDateFormat;
+import java.text.ParseException;
 
 public class Utility {
 
@@ -51,7 +52,15 @@ public class Utility {
     /**
      * convert String to Date
      * */
-    public static Date convertDate(String date) {
-        return (Date) DateTimeFormatter.ofPattern(Constant.DATE_FORMAT_YYYYMMDD).parse(date);
+    public static Date convertDate(String dateString) {
+        SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_YYYYMMDD);
+        Date date = new Date();
+        try {
+            formatter.parse(dateString);
+        } catch (ParseException exception) {
+            exception.printStackTrace();
+        }
+
+        return date;
     }
 }
