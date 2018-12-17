@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/roles")
 public class RoleController {
+
     @Autowired
     private RoleService roleService;
 
@@ -32,6 +33,12 @@ public class RoleController {
         return roleService.create(roleRequest);
     }
 
+    // Deactivate role
+    @PutMapping("/deactivate/{id}")
+    public Role deactivate(@PathVariable String id) throws DatabaseException {
+        return roleService.deactivate(id);
+    }
+
     // Delete role
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable String id) throws DatabaseException {
@@ -44,8 +51,14 @@ public class RoleController {
         return roleService.list();
     }
 
+    // Retrieve role by id
+    @GetMapping("/showById/{id}")
+    public Role retrieveById(@PathVariable String id) throws NotFoundException {
+        return roleService.retrieveById(id);
+    }
+
     // Retrieve role by name
-    @GetMapping("/show/{name}")
+    @GetMapping("/showByName/{name}")
     public Role retrieveByName(@PathVariable String name) throws NotFoundException {
         return roleService.retrieveByName(name);
     }

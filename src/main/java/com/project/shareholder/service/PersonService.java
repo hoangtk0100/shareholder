@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface PersonService {
     // Create new person
-    Person create(PersonRequest personRequest) throws DatabaseException, NotFoundException;
+    Person create(PersonRequest personRequest) throws DatabaseException;
 
     // Update person information
-    Person update(PersonRequest personRequest) throws DatabaseException, NotFoundException;
+    Person update(PersonRequest personRequest) throws DatabaseException;
 
     // Deactivate person
     Person deactivate(String id) throws DatabaseException;
@@ -34,6 +34,9 @@ public interface PersonService {
 
     // Retrieve all persons
     List<Person> list();
+
+    // Update person's total stock
+    Person updateTotalStock(String id, double stockQuantity) throws DatabaseException;
 
     // Add referral
     Person addReferral(PersonRequest personRequest) throws DatabaseException;

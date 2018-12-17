@@ -13,7 +13,7 @@ import java.util.UUID;
 public class RoleDaoImpl extends CommonHibernate<Role> implements RoleDao {
     @Override
     public Role retrieveById(UUID id) throws NotFoundException {
-        String sql = "from role r where r.id = :id";
+        String sql = "from Role r where r.id = :id";
         try {
             Query query = getCurrentSession().createQuery(sql, Role.class)
                     .setParameter("id", id);
@@ -25,7 +25,7 @@ public class RoleDaoImpl extends CommonHibernate<Role> implements RoleDao {
 
     @Override
     public Role retrieveByName(String name) throws NotFoundException {
-        String sql = "from role r where r.name = :name";
+        String sql = "from Role r where r.name = :name";
         try {
             Query query = getCurrentSession().createQuery(sql, Role.class)
                     .setParameter("name", name);

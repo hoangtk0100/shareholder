@@ -15,7 +15,7 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
 
     @Override
     public Person retrieveById(UUID id) throws NotFoundException {
-        String sql = "from person p where p.id = :id";
+        String sql = "from Person p where p.id = :id";
         try {
             Query query = getCurrentSession().createQuery(sql, Person.class)
                     .setParameter("id", id);
@@ -27,11 +27,11 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
 
     @Override
     public Person retrieveByPhoneNumber(String phoneNumber) throws NotFoundException {
-        String sql = "from person p where p.phone_number = :phoneNumber";
+        String sql = "from Person p where p.phoneNumber = :phoneNumber";
         try {
             Query query = getCurrentSession().createQuery(sql, Person.class)
                     .setParameter("phoneNumber", phoneNumber);
-            return (Person) query.getSingleResult();
+            return (Person) query.getResultList().get(0);
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
@@ -39,7 +39,7 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
 
     @Override
     public Person retrieveByUsername(String username) throws NotFoundException {
-        String sql = "from person p where p.username = :username";
+        String sql = "from Person p where p.username = :username";
         try {
             Query query = getCurrentSession().createQuery(sql, Person.class)
                     .setParameter("username", username);
@@ -51,38 +51,13 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
 
     @Override
     public Person retrieveByPersonalId(String personalId) throws NotFoundException {
-        String sql = "from person p where p.personal_id = :personalId";
+        String sql = "from Person p where p.personalId = :personalId";
         try {
             Query query = getCurrentSession().createQuery(sql, Person.class)
                     .setParameter("personalId", personalId);
             return (Person) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
-        }
-    }
-
-    @Override
-    public double retrieveTotalStock(UUID id) throws NotFoundException {
-        String sql = "select total_stock from person p where p.id = :id";
-        try {
-            Query query = getCurrentSession().createQuery(sql, Person.class)
-                    .setParameter("id", id);
-            return (double) query.getSingleResult();
-        } catch (Exception exception) {
-            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
-        }
-    }
-
-    @Override
-    public void updateTotalStock(UUID id, double stockQuantity) throws DatabaseException {
-        String sql = "update person set total_stock = :stockQuantity where id = :id";
-        try {
-            Query query = getCurrentSession().createQuery(sql, Person.class)
-                    .setParameter("id", id)
-                    .setParameter("stockQuantity", stockQuantity);
-             query.executeUpdate();
-        } catch (Exception exception) {
-            throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
     }
 

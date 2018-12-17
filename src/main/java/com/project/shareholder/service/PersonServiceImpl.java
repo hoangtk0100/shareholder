@@ -2,7 +2,6 @@ package com.project.shareholder.service;
 
 import com.project.shareholder.dao.PersonDao;
 import com.project.shareholder.dao.RoleDao;
-import com.project.shareholder.exception.ApplicationException;
 import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Person;
@@ -26,8 +25,9 @@ public class PersonServiceImpl implements PersonService {
     private RoleDao roleDao;
 
     @Override
-    public Person create(PersonRequest personRequest) throws DatabaseException, NotFoundException {
+    public Person create(PersonRequest personRequest) throws DatabaseException {
         Person person = new Person();
+        String referrerUsername = personRequest.getReferrerUsername();
         person.setFullName(personRequest.getFullName());
         person.setUsername(personRequest.getUsername());
         person.setPassword(personRequest.getPassword());
@@ -38,17 +38,28 @@ public class PersonServiceImpl implements PersonService {
         person.setGender(personRequest.isGender());
         person.setPersonalId(personRequest.getPersonalId());
         person.setPhoneNumber(personRequest.getPhoneNumber());
-
-        Role role = new Role();
+        person.setRefererUsername(referrerUsername);
         try {
-            role = roleDao.retrieveByName("USER");
-        } catch (ApplicationException applicationException) {
-            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
-        }
+            // Set role
+            Role role;
+            role = roleDao.retrieveById(UUID.fromString(personRequest.getRoleId()));
+            person.setRole(role);
 
-        person.setRole(role);
-        try {
+            // Create new person
             personDao.createObj(person);
+
+            // Add referral
+            if (!referrerUsername.trim().isEmpty()) {
+                Person referrer = personDao.retrieveByUsername(referrerUsername);
+                if (referrer == null) {
+                    throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+                }
+
+                List<Person> persons = referrer.getReferrals();
+                persons.add(person);
+                referrer.setReferrals(persons);
+                personDao.updateObj(referrer);
+            }
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
@@ -57,7 +68,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Person update(PersonRequest personRequest) throws DatabaseException, NotFoundException {
+    public Person update(PersonRequest personRequest) throws DatabaseException {
         Person person = new Person();
         person.setId(UUID.fromString(personRequest.getId()));
         person.setFullName(personRequest.getFullName());
@@ -70,7 +81,6 @@ public class PersonServiceImpl implements PersonService {
         person.setGender(personRequest.isGender());
         person.setPersonalId(personRequest.getPersonalId());
         person.setPhoneNumber(personRequest.getPhoneNumber());
-        person.setRole(personRequest.getRole());
         try {
             personDao.updateObj(person);
         } catch (Exception exception) {
@@ -140,10 +150,24 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public Person updateTotalStock(String id, double stockQuantity) throws DatabaseException {
+        Person person;
+        try {
+            person = personDao.retrieveById(UUID.fromString(id));
+            person.setTotalStock(stockQuantity);
+            personDao.updateObj(person);
+        } catch (Exception exception) {
+            throw new DatabaseException(Constants.DATABASE_MESSAGE);
+        }
+
+        return person;
+    }
+
+    @Override
     public Person addReferral(PersonRequest personRequest) throws DatabaseException {
         Person referer;
         try {
-            referer= personDao.retrieveByUsername(personRequest.getReferralUsername());
+            referer = personDao.retrieveByUsername(personRequest.getReferrerUsername());
             Person referral = personDao.retrieveById(UUID.fromString(personRequest.getId()));
 
             List<Person> persons = referer.getReferrals();

@@ -26,9 +26,10 @@ public class ActivityServiceImpl implements ActivityService {
 
     // Create new activity
     @Override
-    public Activity create(LoginRequest loginRequest, ActivityRequest activityRequest) throws DatabaseException {
+    public Activity create(ActivityRequest activityRequest) throws DatabaseException {
         Person person = new Person();
-        person.setId(loginRequest.getId());
+        UUID personId = UUID.fromString(activityRequest.getPerson().getId());
+        person.setId(personId);
 
         // Set person's activity
         Activity activity = new Activity();

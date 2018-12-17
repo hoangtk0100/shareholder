@@ -1,39 +1,39 @@
 package com.project.shareholder.request;
 
-import com.project.shareholder.model.Role;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.UUID;
 
 public class PersonRequest {
-    @NotBlank(message = "Id must not be null")
     private UUID id;
 
-    @NotBlank(message = "Id must not be null")
+    @NotBlank(message = "Username must not be null")
     private String username;
 
     @NotBlank(message = "Password must not be null")
     private String password;
 
-    @NotBlank(message = "Permission must not be null")
-    private Role role;
+    @NotNull(message = "Permission must not be null")
+    private UUID roleId;
 
     private String personalId;
 
     @NotBlank(message = "Full name must not be empty")
     private String fullName;
 
+    @NotBlank(message = "Phone number must not be empty")
     private String phoneNumber;
     private boolean gender;
-    private Date birthday;
+    private String birthday;
     private String address;
 
     @NotBlank(message = "Email must not be empty")
     private String email;
 
     private String avatar;
-    private String referralUsername;
+    private String referrerUsername;
 
     // Getter and setter methods
     public String getId() {
@@ -60,12 +60,12 @@ public class PersonRequest {
         this.password = password;
     }
 
-    public Role getRole() {
-        return role;
+    public String getRoleId() {
+        return roleId.toString();
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRoleId(UUID roleId) {
+        this.roleId = roleId;
     }
 
     public String getPersonalId() {
@@ -100,11 +100,11 @@ public class PersonRequest {
         this.gender = gender;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -132,11 +132,11 @@ public class PersonRequest {
         this.avatar = avatar;
     }
 
-    public String getReferralUsername() {
-        return referralUsername;
+    public String getReferrerUsername() {
+        return referrerUsername;
     }
 
-    public void setReferralUsername(String referralUsername) {
-        this.referralUsername = referralUsername;
+    public void setReferrerUsername(String referrerUsername) {
+        this.referrerUsername = referrerUsername;
     }
 }

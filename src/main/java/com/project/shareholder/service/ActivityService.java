@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ActivityService {
     // Create new activity
-    Activity create(LoginRequest loginRequest, ActivityRequest activityRequest) throws DatabaseException;
+    Activity create(ActivityRequest activityRequest) throws DatabaseException;
 
     // Retrieve activity by id
     Activity retrieveById(String id) throws NotFoundException;

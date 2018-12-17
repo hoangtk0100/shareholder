@@ -4,6 +4,9 @@ import com.project.shareholder.exception.NetworkException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -35,5 +38,20 @@ public class Utility {
      * */
     public static boolean isEmptyUUID(UUID uuid) {
         return uuid.toString() == "00000000-0000-0000-0000-000000000000";
+    }
+
+    /**
+     * convert String to YearMonth
+     * */
+    public static YearMonth convertPeriod(String period) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constant.DATE_FORMAT_YYYYMM);
+        return YearMonth.parse(period, formatter);
+    }
+
+    /**
+     * convert String to Date
+     * */
+    public static Date convertDate(String date) {
+        return (Date) DateTimeFormatter.ofPattern(Constant.DATE_FORMAT_YYYYMMDD).parse(date);
     }
 }

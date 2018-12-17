@@ -20,10 +20,4 @@ public interface PersonDao extends CommonHibernateInterface<Serializable, Person
 
     // Retrieve person by personal id
     Person retrieveByPersonalId(String personalId) throws NotFoundException;
-
-    // Retrieve person total shares
-    double retrieveTotalStock(UUID id) throws NotFoundException;
-
-    // Update total shares
-    void updateTotalStock(UUID id, double stockQuantity) throws DatabaseException;
 }

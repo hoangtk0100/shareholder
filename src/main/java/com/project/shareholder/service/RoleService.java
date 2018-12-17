@@ -15,10 +15,13 @@ public interface    RoleService {
     Role update(RoleRequest roleRequest) throws DatabaseException;
 
     // Deactivate role
-    Role deactivate(RoleRequest roleRequest) throws DatabaseException;
+    Role deactivate(String id) throws DatabaseException;
 
     // Delete role
     String delete(String id) throws DatabaseException;
+
+    // Retrieve role by id
+    Role retrieveById(String id) throws NotFoundException;
 
     // Retrieve role by name
     Role retrieveByName(String name) throws NotFoundException;

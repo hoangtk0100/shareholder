@@ -51,10 +51,10 @@ public class RoleServiceImpl implements RoleService {
 
     // Deactivate role
     @Override
-    public Role deactivate(RoleRequest roleRequest) throws DatabaseException {
-        Role role = new Role();
-        role.setId(UUID.fromString(roleRequest.getId()));
+    public Role deactivate(String id) throws DatabaseException {
+        Role role;
         try {
+            role = roleDao.retrieveById(UUID.fromString(id));
             roleDao.deactivateObj(role);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
@@ -75,6 +75,11 @@ public class RoleServiceImpl implements RoleService {
         }
 
         return id;
+    }
+
+    @Override
+    public Role retrieveById(String id) throws NotFoundException {
+        return roleDao.retrieveById(UUID.fromString(id));
     }
 
     // Retrieve role by name

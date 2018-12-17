@@ -5,6 +5,7 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Stage;
 import com.project.shareholder.request.StageRequest;
 
+import java.time.YearMonth;
 import java.util.List;
 
 public interface StageService {
@@ -15,13 +16,16 @@ public interface StageService {
     Stage update(StageRequest stageRequest) throws DatabaseException;
 
     // Deactivate stage
-    Stage deactivate(StageRequest stageRequest) throws DatabaseException;
+    Stage deactivate(String id) throws DatabaseException;
 
     // Delete stage
-    Stage delete(StageRequest stageRequest) throws DatabaseException;
+    String delete(String id) throws DatabaseException;
 
     // Retrieve stage by id
-    Stage retrieveById(StageRequest stageRequest) throws NotFoundException;
+    Stage retrieveById(String id) throws NotFoundException;
+
+    // Retrieve stage by period
+    Stage retrieveByPeriod(YearMonth period) throws NotFoundException;
 
     // Retrieve all stages
     List<Stage> list();

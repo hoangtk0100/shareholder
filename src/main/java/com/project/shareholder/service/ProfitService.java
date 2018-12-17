@@ -6,7 +6,6 @@ import com.project.shareholder.model.Profit;
 import com.project.shareholder.request.ProfitRequest;
 
 import java.time.YearMonth;
-import java.util.UUID;
 
 public interface ProfitService {
     // Create new profit
@@ -16,13 +15,13 @@ public interface ProfitService {
     Profit update(ProfitRequest profitRequest) throws DatabaseException;
 
     // Deactivate profit
-    Profit deactivate(UUID id) throws DatabaseException;
+    Profit deactivate(String id) throws DatabaseException;
 
     // Delete profit
-    String delete(UUID id) throws DatabaseException;
+    String delete(String id) throws DatabaseException;
 
     // Retrieve profit by id
-    Profit retrieveById(UUID id) throws NotFoundException;
+    Profit retrieveById(String id) throws NotFoundException;
 
     // Retrieve profit by period
     Profit retrieveByPeriod(YearMonth period) throws NotFoundException;

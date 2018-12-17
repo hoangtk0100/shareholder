@@ -50,10 +50,10 @@ public class ProfitServiceImpl implements ProfitService {
     }
 
     @Override
-    public Profit deactivate(UUID id) throws DatabaseException {
+    public Profit deactivate(String id) throws DatabaseException {
         Profit profit;
         try {
-            profit = profitDao.retrieveById(id);
+            profit = profitDao.retrieveById(UUID.fromString(id));
             profitDao.deactivateObj(profit);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
@@ -63,22 +63,22 @@ public class ProfitServiceImpl implements ProfitService {
     }
 
     @Override
-    public String delete(UUID id) throws DatabaseException {
+    public String delete(String id) throws DatabaseException {
         try {
-            Profit profit = profitDao.retrieveById(id);
+            Profit profit = profitDao.retrieveById(UUID.fromString(id));
             profitDao.deleteObj(profit);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
 
-        return id.toString();
+        return id;
     }
 
     @Override
-    public Profit retrieveById(UUID id) throws NotFoundException {
+    public Profit retrieveById(String id) throws NotFoundException {
         Profit profit;
         try {
-            profit = profitDao.retrieveById(id);
+            profit = profitDao.retrieveById(UUID.fromString(id));
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }

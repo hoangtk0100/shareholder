@@ -4,10 +4,12 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.UUID;
 
+import static com.project.shareholder.util.Utility.convertDate;
+
 public class StageRequest {
-    @NotNull(message = "Id must not be null")
     private UUID id;
 
     @NotBlank(message = "Name must not be empty")
@@ -17,10 +19,10 @@ public class StageRequest {
     private double quantity;
 
     @NotBlank(message = "Start date must not be empty")
-    private Timestamp dateStartedAt;
+    private String dateStartedAt;
 
     @NotBlank(message = "End date must not be empty")
-    private Timestamp dateEndedAt;
+    private String dateEndedAt;
 
     private String note;
 
@@ -49,19 +51,19 @@ public class StageRequest {
         this.quantity = quantity;
     }
 
-    public Timestamp getDateStartedAt() {
-        return dateStartedAt;
+    public Date getDateStartedAt() {
+        return convertDate(dateStartedAt);
     }
 
-    public void setDateStartedAt(Timestamp dateStartedAt) {
+    public void setDateStartedAt(String dateStartedAt) {
         this.dateStartedAt = dateStartedAt;
     }
 
-    public Timestamp getDateEndedAt() {
-        return dateEndedAt;
+    public Date getDateEndedAt() {
+        return convertDate(dateEndedAt);
     }
 
-    public void setDateEndedAt(Timestamp dateEndedAt) {
+    public void setDateEndedAt(String dateEndedAt) {
         this.dateEndedAt = dateEndedAt;
     }
 

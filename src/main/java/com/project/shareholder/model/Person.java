@@ -36,7 +36,6 @@ public class Person extends CommonSerialize {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
 
-    @NotNull
     @Column(name = "personal_id", unique = true)
     private String personalId;
 
@@ -48,26 +47,21 @@ public class Person extends CommonSerialize {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @NotNull
     @Column(name = "gender")
     private boolean gender;
 
-    @NotNull
     @Column(name = "birthday")
     private Date birthday;
 
-    @NotNull
     @Column(name = "address")
     private String address;
 
-    @NotNull
     @Column(name = "email")
     private String email;
 
     @Column(name = "avatar")
     private String avatar;
 
-    @NotNull
     @Column(name = "total_stock")
     private double totalStock;
 
