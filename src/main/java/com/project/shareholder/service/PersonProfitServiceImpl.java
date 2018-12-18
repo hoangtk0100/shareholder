@@ -7,13 +7,14 @@ import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Person;
 import com.project.shareholder.model.PersonProfit;
+import com.project.shareholder.model.Profit;
 import com.project.shareholder.request.PersonProfitRequest;
 import com.project.shareholder.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.YearMonth;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,10 +34,19 @@ public class PersonProfitServiceImpl implements PersonProfitService {
     public PersonProfit create(PersonProfitRequest personProfitRequest) throws DatabaseException {
         PersonProfit personProfit = new PersonProfit();
         try {
-            personProfit.setId(UUID.fromString(personProfitRequest.getId()));
+            Person person = personDao.retrieveById(personProfitRequest.getPersonId());
+            if (null == person) {
+                throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+            }
+
+            Profit profit = profitDao.retrieveById(personProfitRequest.getProfitId());
+            if (null == profit) {
+                throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+            }
+
+            personProfit.setPerson(person);
+            personProfit.setProfit(profit);
             personProfit.setPeriodProfit(personProfitRequest.getPeriodProfit());
-            personProfit.setPerson(personDao.retrieveById(UUID.fromString(personProfitRequest.getPerson().getId())));
-            personProfit.setProfit(profitDao.retrieveById(UUID.fromString(personProfitRequest.getProfit().getId())));
             personProfitDao.createObj(personProfit);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
@@ -47,31 +57,34 @@ public class PersonProfitServiceImpl implements PersonProfitService {
 
     // Retrieve person profit by id
     @Override
-    public PersonProfit retrieveById(UUID id) throws NotFoundException {
-        return personProfitDao.retrieveById(id);
+    public PersonProfit retrieveById(String id) throws NotFoundException {
+        return personProfitDao.retrieveById(UUID.fromString(id));
     }
 
     // Retrieve person profit by person id
     @Override
-    public PersonProfit retrieveByPersonId(UUID id) throws NotFoundException {
-        return personProfitDao.retrieveByPersonId(id);
+    public List<PersonProfit> retrieveByPersonId(String personId) throws NotFoundException {
+        Person person = personDao.retrieveById(UUID.fromString(personId));
+        return personProfitDao.retrieveByPerson(person);
     }
 
     // Retrieve person profit by profit id
     @Override
-    public PersonProfit retrieveByProfitId(UUID id) throws NotFoundException {
-        return personProfitDao.retrieveByProfitId(id);
-    }
-
-    // Retrieve person profit by period
-    @Override
-    public PersonProfit retrieveByPeriod(YearMonth period) throws NotFoundException {
-        return personProfitDao.retrieveByPeriod(period);
+    public List<PersonProfit> retrieveByProfitId(String profitId) throws NotFoundException {
+        Profit profit = profitDao.retrieveById(UUID.fromString(profitId));
+        return personProfitDao.retrieveByProfit(profit);
     }
 
     // Retrieve person profit by person profit
     @Override
-    public PersonProfit retrieveByPersonProfit(UUID personId, UUID profitId) throws NotFoundException {
-        return personProfitDao.retrieveByPersonProfit(personId, profitId);
+    public PersonProfit retrieveByPersonProfit(String personId, String profitId) throws NotFoundException {
+        Person person = personDao.retrieveById(UUID.fromString(personId));
+        Profit profit = profitDao.retrieveById(UUID.fromString(profitId));
+        return personProfitDao.retrieveByPersonProfit(person, profit);
+    }
+
+    @Override
+    public List<PersonProfit> list() {
+        return personProfitDao.retrieveAll();
     }
 }
