@@ -7,7 +7,7 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Activity;
 import com.project.shareholder.model.Person;
 import com.project.shareholder.request.ActivityRequest;
-import com.project.shareholder.request.LoginRequest;
+import com.project.shareholder.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,17 +27,20 @@ public class ActivityServiceImpl implements ActivityService {
     // Create new activity
     @Override
     public Activity create(ActivityRequest activityRequest) throws DatabaseException {
-        Person person = new Person();
-        UUID personId = UUID.fromString(activityRequest.getPerson().getId());
-        person.setId(personId);
-
-        // Set person's activity
         Activity activity = new Activity();
-        activity.setPerson(person);
-        activity.setType(activityRequest.getType());
-        activity.setTarget(activityRequest.getTarget());
-        activity.setContent(activityRequest.getContent());
         try {
+            // Check if person exists
+            UUID personId = activityRequest.getPersonId();
+            Person person = personDao.retrieveById(personId);
+            if (null == person) {
+                throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+            }
+
+            // Set person's activity
+            activity.setType(activityRequest.getType());
+            activity.setTarget(activityRequest.getTarget());
+            activity.setContent(activityRequest.getContent());
+            activity.setPerson(person);
             activityDao.createObj(activity);
         } catch (Exception exception) {
             throw new DatabaseException(exception.getMessage());
@@ -55,7 +58,8 @@ public class ActivityServiceImpl implements ActivityService {
     // Retrieve person's activity
     @Override
     public List<Activity> retrieveByPersonId(String personId) throws NotFoundException {
-        return (List<Activity>) activityDao.retrieveByPersonId(UUID.fromString(personId));
+        Person person = personDao.retrieveById(UUID.fromString(personId));
+        return activityDao.retrieveByPersonId(person);
     }
 
     // Retrieve all activities

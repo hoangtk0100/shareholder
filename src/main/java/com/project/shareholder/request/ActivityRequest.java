@@ -1,17 +1,15 @@
 package com.project.shareholder.request;
 
-import com.project.shareholder.model.Person;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class ActivityRequest {
-    @NotNull(message = "Id must not be empty")
     private UUID id;
 
-    @NotBlank(message = "Person must not be empty")
-    private Person person;
+    @NotNull(message = "Person must not be empty")
+    private UUID personId;
 
     @NotBlank(message = "Type must not be empty")
     private String type;
@@ -31,12 +29,12 @@ public class ActivityRequest {
         this.id = id;
     }
 
-    public Person getPerson() {
-        return person;
+    public UUID getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(UUID personId) {
+        this.personId = personId;
     }
 
     public String getType() {

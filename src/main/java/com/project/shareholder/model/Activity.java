@@ -23,7 +23,6 @@ public class Activity extends CommonSerialize {
     private UUID id;
 
     @NotNull
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
