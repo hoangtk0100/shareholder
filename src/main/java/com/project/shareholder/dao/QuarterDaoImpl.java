@@ -2,7 +2,7 @@ package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
 import com.project.shareholder.exception.NotFoundException;
-import com.project.shareholder.model.Stage;
+import com.project.shareholder.model.Quarter;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -11,39 +11,39 @@ import java.util.Date;
 import java.util.UUID;
 
 @Repository
-public class StageDaoImpl extends CommonHibernate<Stage> implements StageDao {
+public class QuarterDaoImpl extends CommonHibernate<Quarter> implements QuarterDao {
 
     @Override
-    public Stage retrieveById(UUID id) throws NotFoundException {
-        String sql = "from Stage s where s.id = :id";
+    public Quarter retrieveById(UUID id) throws NotFoundException {
+        String sql = "from Quarter q where q.id = :id";
         try {
-            Query query = getCurrentSession().createQuery(sql, Stage.class)
+            Query query = getCurrentSession().createQuery(sql, Quarter.class)
                     .setParameter("id", id);
-            return (Stage) query.getSingleResult();
+            return (Quarter) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public Stage retrieveByName(String name) throws NotFoundException {
-        String sql = "from Stage s where s.name = :name";
+    public Quarter retrieveByName(String name) throws NotFoundException {
+        String sql = "from Quarter q where q.name = :name";
         try {
-            Query query = getCurrentSession().createQuery(sql, Stage.class)
+            Query query = getCurrentSession().createQuery(sql, Quarter.class)
                     .setParameter("name", name);
-            return (Stage) query.getSingleResult();
+            return (Quarter) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public Stage retrieveByPeriod(Date period) throws NotFoundException {
-        String sql = "from Stage s where :period between s.dateStartedAt and s.dateEndedAt";
+    public Quarter retrieveByPeriod(Date period) throws NotFoundException {
+        String sql = "from Quarter q where :period between q.dateStartedAt and q.dateEndedAt";
         try {
-            Query query = getCurrentSession().createQuery(sql, Stage.class)
+            Query query = getCurrentSession().createQuery(sql, Quarter.class)
                     .setParameter("period", period);
-            return (Stage) query.getSingleResult();
+            return (Quarter) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
@@ -51,6 +51,6 @@ public class StageDaoImpl extends CommonHibernate<Stage> implements StageDao {
 
     @Override
     public String getTableName() {
-        return "Stage";
+        return "Quarter";
     }
 }

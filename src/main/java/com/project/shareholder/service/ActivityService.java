@@ -4,7 +4,6 @@ import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Activity;
 import com.project.shareholder.request.ActivityRequest;
-import com.project.shareholder.request.LoginRequest;
 
 import java.util.List;
 

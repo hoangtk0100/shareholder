@@ -6,7 +6,6 @@ import com.project.shareholder.model.Profit;
 
 import java.io.Serializable;
 import java.time.YearMonth;
-import java.util.Date;
 import java.util.UUID;
 
 public interface ProfitDao extends CommonHibernateInterface<Serializable, Profit> {

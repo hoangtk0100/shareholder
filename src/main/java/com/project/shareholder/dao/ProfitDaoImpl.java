@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.YearMonth;
-import java.util.Date;
 import java.util.UUID;
 
 @Repository

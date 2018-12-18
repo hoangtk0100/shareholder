@@ -1,7 +1,6 @@
 package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
-import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Person;
 import com.project.shareholder.util.Constants;
@@ -31,7 +30,7 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
         try {
             Query query = getCurrentSession().createQuery(sql, Person.class)
                     .setParameter("phoneNumber", phoneNumber);
-            return (Person) query.getResultList().get(0);
+            return (Person) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }

@@ -7,7 +7,6 @@ import com.project.shareholder.model.PersonProfit;
 import com.project.shareholder.model.Profit;
 
 import java.io.Serializable;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.UUID;
 

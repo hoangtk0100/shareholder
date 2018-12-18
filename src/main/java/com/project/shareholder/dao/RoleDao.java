@@ -15,6 +15,6 @@ public interface RoleDao extends CommonHibernateInterface<Serializable, Role> {
     // Retrieve role by name
     Role retrieveByName(String name) throws NotFoundException;
 
-    // Retrieve role by person id
+    // Retrieve role by person
     Role retrieveByPerson(Person person) throws NotFoundException;
 }

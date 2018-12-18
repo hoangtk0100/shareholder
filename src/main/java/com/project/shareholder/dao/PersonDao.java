@@ -1,7 +1,6 @@
 package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernateInterface;
-import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Person;
 
