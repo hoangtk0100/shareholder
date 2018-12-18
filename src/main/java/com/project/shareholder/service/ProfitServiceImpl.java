@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.YearMonth;
+import java.util.List;
 import java.util.UUID;
+
+import static com.project.shareholder.util.Utility.convertStringToYearMonth;
 
 @Service
 @Transactional
@@ -23,9 +26,9 @@ public class ProfitServiceImpl implements ProfitService {
     public Profit create(ProfitRequest profitRequest) throws DatabaseException {
         Profit profit = new Profit();
         try {
-            profit.setId(profitRequest.getId());
+            YearMonth period = convertStringToYearMonth(profitRequest.getPeriod());
             profit.setTotalProfit(profitRequest.getTotalProfit());
-            profit.setPeriod(profitRequest.getPeriod());
+            profit.setPeriod(period);
             profitDao.createObj(profit);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
@@ -40,7 +43,8 @@ public class ProfitServiceImpl implements ProfitService {
         try {
             profit.setId(profitRequest.getId());
             profit.setTotalProfit(profitRequest.getTotalProfit());
-            profit.setPeriod(profitRequest.getPeriod());
+            YearMonth period = convertStringToYearMonth(profitRequest.getPeriod());
+            profit.setPeriod(period);
             profitDao.updateObj(profit);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
@@ -87,15 +91,13 @@ public class ProfitServiceImpl implements ProfitService {
     }
 
     @Override
-    public Profit retrieveByPeriod(YearMonth period) throws NotFoundException {
-        Profit profit;
-        try {
-            profit = profitDao.retrieveByPeriod(period);
-        } catch (Exception exception) {
-            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
-        }
+    public Profit retrieveByPeriod(String period) throws NotFoundException {
+        return profitDao.retrieveByPeriod(convertStringToYearMonth(period));
+    }
 
-        return profit;
+    @Override
+    public List<Profit> list() {
+        return profitDao.retrieveAll();
     }
 }
 

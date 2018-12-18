@@ -6,6 +6,7 @@ import com.project.shareholder.model.Profit;
 import com.project.shareholder.request.ProfitRequest;
 
 import java.time.YearMonth;
+import java.util.List;
 
 public interface ProfitService {
     // Create new profit
@@ -24,5 +25,8 @@ public interface ProfitService {
     Profit retrieveById(String id) throws NotFoundException;
 
     // Retrieve profit by period
-    Profit retrieveByPeriod(YearMonth period) throws NotFoundException;
+    Profit retrieveByPeriod(String period) throws NotFoundException;
+
+    // Retrieve all profits
+    List<Profit> list();
 }

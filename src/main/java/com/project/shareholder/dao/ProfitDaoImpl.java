@@ -8,13 +8,14 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.YearMonth;
+import java.util.Date;
 import java.util.UUID;
 
 @Repository
 public class ProfitDaoImpl extends CommonHibernate<Profit> implements ProfitDao {
     @Override
     public Profit retrieveById(UUID id) throws NotFoundException {
-        String sql = "from profit p where p.id = :id";
+        String sql = "from Profit p where p.id = :id";
         try {
             Query query = getCurrentSession().createQuery(sql, Profit.class)
                     .setParameter("id", id);
@@ -26,7 +27,7 @@ public class ProfitDaoImpl extends CommonHibernate<Profit> implements ProfitDao 
 
     @Override
     public Profit retrieveByPeriod(YearMonth period) throws NotFoundException {
-        String sql = "from profit p where month(p.period)= month(:period) and year(p.period) = year(:period)";
+        String sql = "from Profit p where p.period = :period";
         try {
             Query query = getCurrentSession().createQuery(sql, Profit.class)
                     .setParameter("period", period);

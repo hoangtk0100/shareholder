@@ -1,13 +1,14 @@
 package com.project.shareholder.model;
 
 import com.project.shareholder.common.CommonSerialize;
+import com.project.shareholder.util.YearMonthDateAttributeConverter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,8 +31,11 @@ public class Profit extends CommonSerialize {
     private double totalProfit;
 
     @NotNull
-    @Column(name = "period")
-    private Timestamp period;
+    @Column(name = "period", columnDefinition = "DATE")
+    @Convert(
+            converter = YearMonthDateAttributeConverter.class
+    )
+    private YearMonth period = YearMonth.now();
 
     @OneToMany(mappedBy = "profit", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
@@ -54,11 +58,11 @@ public class Profit extends CommonSerialize {
         this.totalProfit = totalProfit;
     }
 
-    public Timestamp getPeriod() {
+    public YearMonth getPeriod() {
         return period;
     }
 
-    public void setPeriod(Timestamp period) {
+    public void setPeriod(YearMonth period) {
         this.period = period;
     }
 
