@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public class PersonShareDaoImpl extends CommonHibernate<SharePeriod> implements PersonShareDao {
+public class SharePeriodDaoImpl extends CommonHibernate<SharePeriod> implements SharePeriodDao {
     @Override
     public SharePeriod retrieveById(UUID id) throws NotFoundException {
         String sql = "from person_share p where p.id = :id";

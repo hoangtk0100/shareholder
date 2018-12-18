@@ -3,10 +3,8 @@ package com.project.shareholder.request;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.util.List;
 import java.util.UUID;
-
-import static com.project.shareholder.util.Utility.convertStringToDate;
 
 public class StageRequest {
     private UUID id;
@@ -15,7 +13,7 @@ public class StageRequest {
     private String name;
 
     @NotNull(message = "Stock quantity must not be empty")
-    private double quantity;
+    private double stockQuantity;
 
     @NotBlank(message = "Start date must not be empty")
     private String dateStartedAt;
@@ -23,11 +21,12 @@ public class StageRequest {
     @NotBlank(message = "End date must not be empty")
     private String dateEndedAt;
 
+    private List<UUID> quarterIds;
     private String note;
 
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -42,28 +41,36 @@ public class StageRequest {
         this.name = name;
     }
 
-    public double getQuantity() {
-        return quantity;
+    public double getStockQuantity() {
+        return stockQuantity;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setStockQuantity(double stockQuantity) {
+        this.stockQuantity = stockQuantity;
     }
 
-    public Date getDateStartedAt() {
-        return convertStringToDate(dateStartedAt);
+    public String getDateStartedAt() {
+        return dateStartedAt;
     }
 
     public void setDateStartedAt(String dateStartedAt) {
         this.dateStartedAt = dateStartedAt;
     }
 
-    public Date getDateEndedAt() {
-        return convertStringToDate(dateEndedAt);
+    public String getDateEndedAt() {
+        return dateEndedAt;
     }
 
     public void setDateEndedAt(String dateEndedAt) {
         this.dateEndedAt = dateEndedAt;
+    }
+
+    public List<UUID> getQuarterIds() {
+        return quarterIds;
+    }
+
+    public void setQuarterIds(List<UUID> quarterIds) {
+        this.quarterIds = quarterIds;
     }
 
     public String getNote() {

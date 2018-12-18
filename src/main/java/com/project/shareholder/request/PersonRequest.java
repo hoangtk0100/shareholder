@@ -3,6 +3,7 @@ package com.project.shareholder.request;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
 
 public class PersonRequest {
@@ -32,11 +33,15 @@ public class PersonRequest {
     private String email;
 
     private String avatar;
-    private String referrerUsername;
+    private double totalStock;
+    private double totalProfit;
+    private UUID referrerId;
+    private List<UUID> personProfitIds;
+    private List<UUID> personQuarterIds;
 
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -59,8 +64,8 @@ public class PersonRequest {
         this.password = password;
     }
 
-    public String getRoleId() {
-        return roleId.toString();
+    public UUID getRoleId() {
+        return roleId;
     }
 
     public void setRoleId(UUID roleId) {
@@ -131,11 +136,43 @@ public class PersonRequest {
         this.avatar = avatar;
     }
 
-    public String getReferrerUsername() {
-        return referrerUsername;
+    public double getTotalStock() {
+        return totalStock;
     }
 
-    public void setReferrerUsername(String referrerUsername) {
-        this.referrerUsername = referrerUsername;
+    public void setTotalStock(double totalStock) {
+        this.totalStock = totalStock;
+    }
+
+    public double getTotalProfit() {
+        return totalProfit;
+    }
+
+    public void setTotalProfit(double totalProfit) {
+        this.totalProfit = totalProfit;
+    }
+
+    public UUID getReferrerId() {
+        return referrerId;
+    }
+
+    public void setReferrerId(UUID referrerId) {
+        this.referrerId = referrerId;
+    }
+
+    public List<UUID> getPersonProfitIds() {
+        return personProfitIds;
+    }
+
+    public void setPersonProfitIds(List<UUID> personProfitIds) {
+        this.personProfitIds = personProfitIds;
+    }
+
+    public List<UUID> getPersonQuarterIds() {
+        return personQuarterIds;
+    }
+
+    public void setPersonQuarterIds(List<UUID> personQuarterIds) {
+        this.personQuarterIds = personQuarterIds;
     }
 }

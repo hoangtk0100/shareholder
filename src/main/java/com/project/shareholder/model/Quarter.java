@@ -10,9 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-
 @Entity
-@Table(name = "person_share",
+@Table(name = "quarter",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}),
                              @UniqueConstraint(columnNames = {"stage_id"}),
                              @UniqueConstraint(columnNames = {"date_started_at"})
@@ -55,14 +54,11 @@ public class Quarter extends CommonSerialize {
     private Stage stage;
 
     @OneToMany(mappedBy = "quarter", fetch = FetchType.EAGER)
-    private List<Person> persons;
-
-    @OneToMany(mappedBy = "quarter", fetch = FetchType.EAGER)
     private List<PersonQuarter> personQuarters;
 
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -83,6 +79,14 @@ public class Quarter extends CommonSerialize {
 
     public void setStockQuantity(double stockQuantity) {
         this.stockQuantity = stockQuantity;
+    }
+
+    public double getStockQuantityLeft() {
+        return stockQuantityLeft;
+    }
+
+    public void setStockQuantityLeft(double stockQuantityLeft) {
+        this.stockQuantityLeft = stockQuantityLeft;
     }
 
     public Date getDateStartedAt() {
@@ -117,27 +121,11 @@ public class Quarter extends CommonSerialize {
         this.stage = stage;
     }
 
-    public List<Person> getPersons() {
-        return persons;
-    }
-
-    public void setPersons(List<Person> persons) {
-        this.persons = persons;
-    }
-
     public List<PersonQuarter> getPersonQuarters() {
         return personQuarters;
     }
 
     public void setPersonQuarters(List<PersonQuarter> personQuarters) {
         this.personQuarters = personQuarters;
-    }
-
-    public double getStockQuantityLeft() {
-        return stockQuantityLeft;
-    }
-
-    public void setStockQuantityLeft(double stockQuantityLeft) {
-        this.stockQuantityLeft = stockQuantityLeft;
     }
 }

@@ -3,7 +3,6 @@ package com.project.shareholder.request;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.UUID;
 
 public class ProfitRequest {

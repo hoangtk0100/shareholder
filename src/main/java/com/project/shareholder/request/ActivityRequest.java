@@ -21,8 +21,8 @@ public class ActivityRequest {
     private String content;
 
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {

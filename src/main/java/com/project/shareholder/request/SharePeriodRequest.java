@@ -1,28 +1,24 @@
 package com.project.shareholder.request;
 
-import com.project.shareholder.model.Person;
-import com.project.shareholder.model.Stage;
 import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class PersonShareRequest {
+public class SharePeriodRequest {
     private UUID id;
 
     @NotBlank(message = "Stock quantity must not be empty")
     private double stockQuantity;
 
-    private String note;
-
     @NotBlank(message = "Period must be specific")
     private Timestamp period;
 
-    @NotBlank(message = "Person must be specific")
-    private Person person;
+    @NotNull(message = "Person quarter must not be null")
+    private UUID personQuarterId;
 
-    @NotBlank(message = "Stage must be specific")
-    private Stage stage;
+    private String note;
 
     // Getter and setter methods
     public UUID getId() {
@@ -41,14 +37,6 @@ public class PersonShareRequest {
         this.stockQuantity = stockQuantity;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
     public Timestamp getPeriod() {
         return period;
     }
@@ -57,19 +45,19 @@ public class PersonShareRequest {
         this.period = period;
     }
 
-    public Person getPerson() {
-        return person;
+    public UUID getPersonQuarterId() {
+        return personQuarterId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonQuarterId(UUID personQuarterId) {
+        this.personQuarterId = personQuarterId;
     }
 
-    public Stage getStage() {
-        return stage;
+    public String getNote() {
+        return note;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
+    public void setNote(String note) {
+        this.note = note;
     }
 }

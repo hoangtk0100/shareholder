@@ -1,6 +1,5 @@
 package com.project.shareholder.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.shareholder.common.CommonSerialize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -8,7 +7,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "person",
@@ -44,7 +45,7 @@ public class Person extends CommonSerialize {
     private String fullName;
 
     @NotNull
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
     @Column(name = "gender")
@@ -56,7 +57,7 @@ public class Person extends CommonSerialize {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "avatar")
@@ -68,29 +69,20 @@ public class Person extends CommonSerialize {
     @Column(name = "total_profit")
     private double totalProfit;
 
-    @Column(name = "referer_username")
-    private String refererUsername;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "referrals", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Person> referrals;
+    @Column(name = "referer_id")
+    private UUID refererId;
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<PersonProfit> personProfits;
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<PersonQuarter> personQuarters;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "quarter_id", referencedColumnName = "id")
-    private Quarter quarter;
-
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -201,20 +193,12 @@ public class Person extends CommonSerialize {
         this.totalProfit = totalProfit;
     }
 
-    public String getRefererUsername() {
-        return refererUsername;
+    public UUID getRefererId() {
+        return refererId;
     }
 
-    public void setRefererUsername(String refererUsername) {
-        this.refererUsername = refererUsername;
-    }
-
-    public List<Person> getReferrals() {
-        return referrals;
-    }
-
-    public void setReferrals(List<Person> referrals) {
-        this.referrals = referrals;
+    public void setRefererId(UUID refererId) {
+        this.refererId = refererId;
     }
 
     public List<PersonProfit> getPersonProfits() {
@@ -231,14 +215,6 @@ public class Person extends CommonSerialize {
 
     public void setPersonQuarters(List<PersonQuarter> personQuarters) {
         this.personQuarters = personQuarters;
-    }
-
-    public Quarter getQuarter() {
-        return quarter;
-    }
-
-    public void setQuarter(Quarter quarter) {
-        this.quarter = quarter;
     }
 }
 

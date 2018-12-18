@@ -5,7 +5,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -49,8 +48,8 @@ public class Stage extends CommonSerialize {
     private List<Quarter> quarters;
 
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -71,14 +70,6 @@ public class Stage extends CommonSerialize {
 
     public void setStockQuantity(double stockQuantity) {
         this.stockQuantity = stockQuantity;
-    }
-
-    public List<Quarter> getQuarters() {
-        return quarters;
-    }
-
-    public void setQuarters(List<Quarter> quarters) {
-        this.quarters = quarters;
     }
 
     public Date getDateStartedAt() {
@@ -103,5 +94,13 @@ public class Stage extends CommonSerialize {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public List<Quarter> getQuarters() {
+        return quarters;
+    }
+
+    public void setQuarters(List<Quarter> quarters) {
+        this.quarters = quarters;
     }
 }

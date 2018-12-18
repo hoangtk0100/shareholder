@@ -1,5 +1,6 @@
 package com.project.shareholder.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.shareholder.common.CommonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -9,9 +10,9 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name = "person_share",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"person_id"}),
-                             @UniqueConstraint(columnNames = {"person_id", "stage_id"})
+@Table(name = "person_period",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}),
+                             @UniqueConstraint(columnNames = {"period"})
         }
 )
 
@@ -34,9 +35,14 @@ public class SharePeriod extends CommonSerialize {
     @Column(name = "note")
     private String note;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_quarter_id", referencedColumnName = "id")
+    private PersonQuarter personQuarter;
+
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -65,5 +71,13 @@ public class SharePeriod extends CommonSerialize {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public PersonQuarter getPersonQuarter() {
+        return personQuarter;
+    }
+
+    public void setPersonQuarter(PersonQuarter personQuarter) {
+        this.personQuarter = personQuarter;
     }
 }

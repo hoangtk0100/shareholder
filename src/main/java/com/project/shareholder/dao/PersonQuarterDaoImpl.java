@@ -2,58 +2,59 @@ package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
 import com.project.shareholder.exception.NotFoundException;
-import com.project.shareholder.util.*;
+import com.project.shareholder.model.PersonQuarter;
+import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public class PersonShareStageDaoImpl extends CommonHibernate<PersonShareStage> implements PersonShareStageDao {
+public class PersonQuarterDaoImpl extends CommonHibernate<PersonQuarter> implements PersonQuarterDao {
     @Override
-    public PersonShareStage retrieveById(UUID id) throws NotFoundException {
+    public PersonQuarter retrieveById(UUID id) throws NotFoundException {
         String sql = "from person_share_stage p where p.id = :id";
         try {
-            Query query = getCurrentSession().createQuery(sql, PersonShareStage.class)
+            Query query = getCurrentSession().createQuery(sql, PersonQuarter.class)
                     .setParameter("id", id);
-            return (PersonShareStage) query.getSingleResult();
+            return (PersonQuarter) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public PersonShareStage retrieveByStageId(UUID stageId) throws NotFoundException {
+    public PersonQuarter retrieveByStageId(UUID stageId) throws NotFoundException {
         String sql = "from person_share_stage p where p.stage_id = :stageId";
         try {
-            Query query = getCurrentSession().createQuery(sql, PersonShareStage.class)
+            Query query = getCurrentSession().createQuery(sql, PersonQuarter.class)
                     .setParameter("stageId", stageId);
-            return (PersonShareStage) query.getResultList();
+            return (PersonQuarter) query.getResultList();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public PersonShareStage retrieveByPersonId(UUID personId) throws NotFoundException {
+    public PersonQuarter retrieveByPersonId(UUID personId) throws NotFoundException {
         String sql = "from person_share_stage p where p.person_id = :personId";
         try {
-            Query query = getCurrentSession().createQuery(sql, PersonShareStage.class)
+            Query query = getCurrentSession().createQuery(sql, PersonQuarter.class)
                     .setParameter("personId", personId);
-            return (PersonShareStage) query.getResultList();
+            return (PersonQuarter) query.getResultList();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public PersonShareStage retrieveByPersonStage(UUID stageId, UUID personId) throws NotFoundException {
+    public PersonQuarter retrieveByPersonStage(UUID stageId, UUID personId) throws NotFoundException {
         String sql = "from person_share_stage p where p.stage_id = :stageId and p.person_id = :personId";
         try {
-            Query query = getCurrentSession().createQuery(sql, PersonShareStage.class)
+            Query query = getCurrentSession().createQuery(sql, PersonQuarter.class)
                     .setParameter("stageId", stageId)
                     .setParameter("personId", personId);
-            return (PersonShareStage) query.getResultList();
+            return (PersonQuarter) query.getResultList();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
@@ -61,6 +62,6 @@ public class PersonShareStageDaoImpl extends CommonHibernate<PersonShareStage> i
 
     @Override
     public String getTableName() {
-        return "PersonShareStage";
+        return "PersonQuarter";
     }
 }

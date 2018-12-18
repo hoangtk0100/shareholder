@@ -7,7 +7,7 @@ import com.project.shareholder.model.SharePeriod;
 import java.io.Serializable;
 import java.util.UUID;
 
-public interface PersonShareDao extends CommonHibernateInterface<Serializable, SharePeriod> {
+public interface SharePeriodDao extends CommonHibernateInterface<Serializable, SharePeriod> {
     // Retrieve person share by id
     SharePeriod retrieveById(UUID id) throws NotFoundException;
 

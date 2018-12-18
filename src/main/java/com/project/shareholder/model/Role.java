@@ -26,8 +26,8 @@ public class Role extends CommonSerialize {
     private String name;
 
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {

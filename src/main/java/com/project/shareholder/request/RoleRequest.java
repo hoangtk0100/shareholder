@@ -10,11 +10,9 @@ public class RoleRequest {
     @NotBlank(message = "Name must not be empty")
     private String name;
 
-    private Boolean active;
-
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -27,13 +25,5 @@ public class RoleRequest {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Boolean isActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
     }
 }

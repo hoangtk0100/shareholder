@@ -2,15 +2,17 @@ package com.project.shareholder.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.shareholder.common.CommonSerialize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_share_stage",
+@Table(name = "person_quarter",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"person_id", "quarter_id"}),
                              @UniqueConstraint(columnNames = {"id"}),
                              @UniqueConstraint(columnNames = {"period"})
@@ -30,8 +32,15 @@ public class PersonQuarter extends CommonSerialize {
     private double stockQuantity;
 
     @NotNull
-    @Column(name = "period", unique = true)
-    private Timestamp period;
+    @Column(name = "bonus_stock")
+    private double bonusStock;
+
+    @NotNull
+    @Column(name = "referral_quantity")
+    private int referralQuantity;
+
+    @Column(name = "referral_ids")
+    private List<UUID> referralIds;
 
     @Column(name = "note")
     private String note;
@@ -46,9 +55,13 @@ public class PersonQuarter extends CommonSerialize {
     @JoinColumn(name = "quarter_id", referencedColumnName = "id")
     private Quarter quarter;
 
+    @OneToMany(mappedBy = "personQuarter", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<SharePeriod> sharePeriods;
+
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
@@ -63,12 +76,28 @@ public class PersonQuarter extends CommonSerialize {
         this.stockQuantity = stockQuantity;
     }
 
-    public Timestamp getPeriod() {
-        return period;
+    public double getBonusStock() {
+        return bonusStock;
     }
 
-    public void setPeriod(Timestamp period) {
-        this.period = period;
+    public void setBonusStock(double bonusStock) {
+        this.bonusStock = bonusStock;
+    }
+
+    public int getReferralQuantity() {
+        return referralQuantity;
+    }
+
+    public void setReferralQuantity(int referralQuantity) {
+        this.referralQuantity = referralQuantity;
+    }
+
+    public List<UUID> getReferralIds() {
+        return referralIds;
+    }
+
+    public void setReferralIds(List<UUID> referralIds) {
+        this.referralIds = referralIds;
     }
 
     public String getNote() {
@@ -93,5 +122,13 @@ public class PersonQuarter extends CommonSerialize {
 
     public void setQuarter(Quarter quarter) {
         this.quarter = quarter;
+    }
+
+    public List<SharePeriod> getSharePeriods() {
+        return sharePeriods;
+    }
+
+    public void setSharePeriods(List<SharePeriod> sharePeriods) {
+        this.sharePeriods = sharePeriods;
     }
 }

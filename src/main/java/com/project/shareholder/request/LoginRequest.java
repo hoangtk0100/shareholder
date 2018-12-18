@@ -13,14 +13,7 @@ public class LoginRequest {
     @NotBlank(message = "Password must not be empty")
     private String password;
 
-//    @NotBlank(message = "Full name must not be empty")
-    private String fullName;
-
-//    @NotBlank(message = "Email must not be empty")
-    private String email;
-
-//    @NotBlank(message = "Avatar must not be empty")
-    private String avatar;
+    private String token;
 
     // Getter and setter methods
     public UUID getId() {
@@ -47,27 +40,11 @@ public class LoginRequest {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getToken() {
+        return token;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

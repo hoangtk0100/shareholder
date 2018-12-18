@@ -1,6 +1,5 @@
 package com.project.shareholder.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.shareholder.common.CommonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 
