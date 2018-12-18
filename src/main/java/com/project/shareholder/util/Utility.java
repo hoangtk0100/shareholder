@@ -4,13 +4,12 @@ import com.project.shareholder.exception.NetworkException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-
 public class Utility {
 
     public static final int UID_LENGTH = 12;

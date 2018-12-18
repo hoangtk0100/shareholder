@@ -2,19 +2,21 @@ package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
 import com.project.shareholder.exception.NotFoundException;
+import com.project.shareholder.model.Person;
 import com.project.shareholder.model.PersonProfit;
+import com.project.shareholder.model.Profit;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.YearMonth;
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implements PersonProfitDao {
     @Override
     public PersonProfit retrieveById(UUID id) throws NotFoundException {
-        String sql = "from person_profit p where p.id = :id";
+        String sql = "from PersonProfit p where p.id = :id";
         try {
             Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
                     .setParameter("id", id);
@@ -25,61 +27,36 @@ public class PersonProfitDaoImpl extends CommonHibernate<PersonProfit> implement
     }
 
     @Override
-    public PersonProfit retrieveByPersonId(UUID personId) throws NotFoundException {
-        String sql = "from person_profit p where p.person_id = :personId";
+    public List<PersonProfit> retrieveByPerson(Person person) throws NotFoundException {
+        String sql = "from PersonProfit p where p.person = :person";
         try {
             Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
-                    .setParameter("personId", personId);
-            return (PersonProfit) query.getResultList();
+                    .setParameter("person", person);
+            return query.getResultList();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public PersonProfit retrieveByProfitId(UUID profitId) throws NotFoundException {
-        String sql = "from person_profit p where p.profit_id = :profitId";
+    public List<PersonProfit> retrieveByProfit(Profit profit) throws NotFoundException {
+        String sql = "from PersonProfit p where p.profit = :profit";
         try {
             Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
-                    .setParameter("profitId", profitId);
-            return (PersonProfit) query.getResultList();
+                    .setParameter("profit", profit);
+            return query.getResultList();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public PersonProfit retrieveByPeriod(YearMonth period) throws NotFoundException {
-        String sql = "from person_profit p where month(p.period)= month(:period) and year(p.period) = year(:period)";
+    public PersonProfit retrieveByPersonProfit(Person person, Profit profit) throws NotFoundException {
+        String sql = "from PersonProfit p where p.person = :person and p.profit = :profit";
         try {
             Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
-                    .setParameter("period", period);
-            return (PersonProfit) query.getSingleResult();
-        } catch (Exception exception) {
-            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
-        }
-    }
-
-    @Override
-    public PersonProfit retrieveByPersonPeriod(UUID personId, YearMonth period) throws NotFoundException {
-        String sql = "from person_profit p where p.person_id = :personId and month(p.period)= month(:period) and year(p.period) = year(:period)";
-        try {
-            Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
-                    .setParameter("personId", personId)
-                    .setParameter("period", period);
-            return (PersonProfit) query.getSingleResult();
-        } catch (Exception exception) {
-            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
-        }
-    }
-
-    @Override
-    public PersonProfit retrieveByPersonProfit(UUID personId, UUID profitId) throws NotFoundException {
-        String sql = "from person_profit p where p.person_id = :personId and p.profit_id = :profitId";
-        try {
-            Query query = getCurrentSession().createQuery(sql, PersonProfit.class)
-                    .setParameter("personId", personId)
-                    .setParameter("profitId", profitId);
+                    .setParameter("person", person)
+                    .setParameter("profit", profit);
             return (PersonProfit) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);

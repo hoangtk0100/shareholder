@@ -1,46 +1,43 @@
 package com.project.shareholder.request;
 
-import com.project.shareholder.model.Person;
-import com.project.shareholder.model.Profit;
-import org.hibernate.validator.constraints.NotBlank;
-
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class PersonProfitRequest {
     private UUID id;
 
-    @NotBlank(message = "Person must be identified")
-    private Person person;
+    @NotNull(message = "Person must be identified")
+    private UUID personId;
 
-    @NotBlank(message = "Profit must be identified")
-    private Profit profit;
+    @NotNull(message = "Period must be identified")
+    private UUID profitId;
 
-    @NotBlank(message = "Profit must not be empty")
+    @NotNull(message = "Profit must not be empty")
     private double periodProfit;
 
     // Getter and setter methods
-    public String getId() {
-        return id.toString();
+    public UUID getId() {
+        return id;
     }
 
     public void setId(UUID id) {
         this.id = id;
     }
 
-    public Person getPerson() {
-        return person;
+    public UUID getPersonId() {
+        return personId;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setPersonId(UUID personId) {
+        this.personId = personId;
     }
 
-    public Profit getProfit() {
-        return profit;
+    public UUID getProfitId() {
+        return profitId;
     }
 
-    public void setProfit(Profit profit) {
-        this.profit = profit;
+    public void setProfitId(UUID profitId) {
+        this.profitId = profitId;
     }
 
     public double getPeriodProfit() {

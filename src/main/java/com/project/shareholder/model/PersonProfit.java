@@ -10,9 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "person_profit",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"person_id", "profit_id"}),
-                             @UniqueConstraint(columnNames = {"person_id"}),
-                             @UniqueConstraint(columnNames = {"profit_id"})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"person_id", "profit_id"})
         }
 )
 

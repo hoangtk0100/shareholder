@@ -5,7 +5,7 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.PersonProfit;
 import com.project.shareholder.request.PersonProfitRequest;
 
-import java.time.YearMonth;
+import java.util.List;
 import java.util.UUID;
 
 public interface PersonProfitService {
@@ -13,17 +13,16 @@ public interface PersonProfitService {
     PersonProfit create(PersonProfitRequest personProfitRequest) throws DatabaseException;
 
     // Retrieve person profit by id
-    PersonProfit retrieveById(UUID id) throws NotFoundException;
+    PersonProfit retrieveById(String id) throws NotFoundException;
 
     // Retrieve person profit by person id
-    PersonProfit retrieveByPersonId(UUID id) throws NotFoundException;
+    List<PersonProfit> retrieveByPersonId(String personId) throws NotFoundException;
 
     // Retrieve person profit by profit id
-    PersonProfit retrieveByProfitId(UUID id) throws NotFoundException;
-
-    // Retrieve person profit by period
-    PersonProfit retrieveByPeriod(YearMonth period) throws NotFoundException;
+    List<PersonProfit> retrieveByProfitId(String profitId) throws NotFoundException;
 
     // Retrieve person profit by person profit
-    PersonProfit retrieveByPersonProfit(UUID personId, UUID profitId) throws NotFoundException;
+    PersonProfit retrieveByPersonProfit(String personId, String profitId) throws NotFoundException;
+
+    List<PersonProfit> list();
 }
