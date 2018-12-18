@@ -2,24 +2,22 @@ package com.project.shareholder.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.shareholder.common.CommonSerialize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "user_share_stage",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"person_id", "stage_id"}),
-                             @UniqueConstraint(columnNames = {"id"})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"person_id", "quarter_id"}),
+                             @UniqueConstraint(columnNames = {"id"}),
+                             @UniqueConstraint(columnNames = {"period"})
         }
 )
 
-public class PersonShareStage extends CommonSerialize {
+public class PersonQuarter extends CommonSerialize {
 
     @Id
     @Column(name = "id")
@@ -28,20 +26,12 @@ public class PersonShareStage extends CommonSerialize {
     private UUID id;
 
     @NotNull
-    @Column(name = "name")
-    private String name;
-
-    @NotNull
     @Column(name = "stock_quantity")
     private double stockQuantity;
 
     @NotNull
-    @Column(name = "date_started_at")
-    private Timestamp dateStartedAt;
-
-    @NotNull
-    @Column(name = "date_ended_at")
-    private Timestamp dateEndedAt;
+    @Column(name = "period", unique = true)
+    private Timestamp period;
 
     @Column(name = "note")
     private String note;
@@ -53,12 +43,8 @@ public class PersonShareStage extends CommonSerialize {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "stage_id", referencedColumnName = "id")
-    private Stage stage;
-
-    @OneToMany(mappedBy = "personShareStage", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<PersonShare> personShares;
+    @JoinColumn(name = "quarter_id", referencedColumnName = "id")
+    private Quarter quarter;
 
     // Getter and setter methods
     public String getId() {
@@ -69,14 +55,6 @@ public class PersonShareStage extends CommonSerialize {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public double getStockQuantity() {
         return stockQuantity;
     }
@@ -85,20 +63,12 @@ public class PersonShareStage extends CommonSerialize {
         this.stockQuantity = stockQuantity;
     }
 
-    public Timestamp getDateStartedAt() {
-        return dateStartedAt;
+    public Timestamp getPeriod() {
+        return period;
     }
 
-    public void setDateStartedAt(Timestamp dateStartedAt) {
-        this.dateStartedAt = dateStartedAt;
-    }
-
-    public Timestamp getDateEndedAt() {
-        return dateEndedAt;
-    }
-
-    public void setDateEndedAt(Timestamp dateEndedAt) {
-        this.dateEndedAt = dateEndedAt;
+    public void setPeriod(Timestamp period) {
+        this.period = period;
     }
 
     public String getNote() {
@@ -117,19 +87,11 @@ public class PersonShareStage extends CommonSerialize {
         this.person = person;
     }
 
-    public Stage getStage() {
-        return stage;
+    public Quarter getQuarter() {
+        return quarter;
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public List<PersonShare> getPersonShares() {
-        return personShares;
-    }
-
-    public void setPersonShares(List<PersonShare> personShares) {
-        this.personShares = personShares;
+    public void setQuarter(Quarter quarter) {
+        this.quarter = quarter;
     }
 }

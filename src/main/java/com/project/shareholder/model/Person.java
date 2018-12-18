@@ -78,14 +78,15 @@ public class Person extends CommonSerialize {
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<PersonShare> personShares;
-
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
     private List<PersonProfit> personProfits;
 
     @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
-    private List<PersonShareStage> personShareStages;
+    private List<PersonQuarter> personQuarters;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "quarter_id", referencedColumnName = "id")
+    private Quarter quarter;
 
     // Getter and setter methods
     public String getId() {
@@ -216,14 +217,6 @@ public class Person extends CommonSerialize {
         this.referrals = referrals;
     }
 
-    public List<PersonShare> getPersonShares() {
-        return personShares;
-    }
-
-    public void setPersonShares(List<PersonShare> personShares) {
-        this.personShares = personShares;
-    }
-
     public List<PersonProfit> getPersonProfits() {
         return personProfits;
     }
@@ -232,12 +225,20 @@ public class Person extends CommonSerialize {
         this.personProfits = personProfits;
     }
 
-    public List<PersonShareStage> getPersonShareStages() {
-        return personShareStages;
+    public List<PersonQuarter> getPersonQuarters() {
+        return personQuarters;
     }
 
-    public void setPersonShareStages(List<PersonShareStage> personShareStages) {
-        this.personShareStages = personShareStages;
+    public void setPersonQuarters(List<PersonQuarter> personQuarters) {
+        this.personQuarters = personQuarters;
+    }
+
+    public Quarter getQuarter() {
+        return quarter;
+    }
+
+    public void setQuarter(Quarter quarter) {
+        this.quarter = quarter;
     }
 }
 

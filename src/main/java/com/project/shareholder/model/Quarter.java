@@ -1,24 +1,25 @@
 package com.project.shareholder.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.shareholder.common.CommonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+
 @Entity
-@Table(name = "stage",
+@Table(name = "person_share",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}),
-                @UniqueConstraint(columnNames = {"date_started_at"}),
-                @UniqueConstraint(columnNames = {"date_ended_at"})
+                             @UniqueConstraint(columnNames = {"stage_id"}),
+                             @UniqueConstraint(columnNames = {"date_started_at"})
         }
 )
 
-public class Stage extends CommonSerialize {
+public class Quarter extends CommonSerialize {
 
     @Id
     @Column(name = "id")
@@ -34,6 +35,9 @@ public class Stage extends CommonSerialize {
     @Column(name = "stock_quantity")
     private double stockQuantity;
 
+    @Column(name = "stock_quantity_left")
+    private double stockQuantityLeft;
+
     @NotNull
     @Column(name = "date_started_at", columnDefinition = "DATE")
     private Date dateStartedAt;
@@ -45,8 +49,16 @@ public class Stage extends CommonSerialize {
     @Column(name = "note")
     private String note;
 
-    @OneToMany(mappedBy = "stage", fetch = FetchType.EAGER)
-    private List<Quarter> quarters;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "stage_id", referencedColumnName = "id")
+    private Stage stage;
+
+    @OneToMany(mappedBy = "quarter", fetch = FetchType.EAGER)
+    private List<Person> persons;
+
+    @OneToMany(mappedBy = "quarter", fetch = FetchType.EAGER)
+    private List<PersonQuarter> personQuarters;
 
     // Getter and setter methods
     public String getId() {
@@ -73,14 +85,6 @@ public class Stage extends CommonSerialize {
         this.stockQuantity = stockQuantity;
     }
 
-    public List<Quarter> getQuarters() {
-        return quarters;
-    }
-
-    public void setQuarters(List<Quarter> quarters) {
-        this.quarters = quarters;
-    }
-
     public Date getDateStartedAt() {
         return dateStartedAt;
     }
@@ -103,5 +107,37 @@ public class Stage extends CommonSerialize {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public List<Person> getPersons() {
+        return persons;
+    }
+
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
+    }
+
+    public List<PersonQuarter> getPersonQuarters() {
+        return personQuarters;
+    }
+
+    public void setPersonQuarters(List<PersonQuarter> personQuarters) {
+        this.personQuarters = personQuarters;
+    }
+
+    public double getStockQuantityLeft() {
+        return stockQuantityLeft;
+    }
+
+    public void setStockQuantityLeft(double stockQuantityLeft) {
+        this.stockQuantityLeft = stockQuantityLeft;
     }
 }

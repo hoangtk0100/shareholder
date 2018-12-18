@@ -3,7 +3,7 @@ package com.project.shareholder.service;
 import com.project.shareholder.dao.PersonShareDao;
 import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.model.Person;
-import com.project.shareholder.model.PersonShare;
+import com.project.shareholder.model.SharePeriod;
 import com.project.shareholder.model.Stage;
 import com.project.shareholder.request.PersonShareRequest;
 import com.project.shareholder.util.Constants;
@@ -16,46 +16,46 @@ public class PersonShareServiceImpl implements PersonShareService {
     private PersonShareDao personShareDao;
 
     @Override
-    public PersonShare add(PersonShareRequest personShareRequest) throws DatabaseException {
-        PersonShare personShare = new PersonShare();
+    public SharePeriod add(PersonShareRequest personShareRequest) throws DatabaseException {
+        SharePeriod sharePeriod = new SharePeriod();
         try {
             Person person = new Person();
             person.setId(UUID.fromString(personShareRequest.getPerson().getId()));
-            personShare.setPerson(person);
+            sharePeriod.setPerson(person);
 
             Stage stage = new Stage();
             stage.setId(UUID.fromString(personShareRequest.getStage().getId()));
-            personShare.setStage(stage);
-            personShare.setNote("Add");
-            personShare.setStockQuantity(personShareRequest.getStockQuantity());
-            personShare.setPeriod(personShareRequest.getPeriod());
-            personShareDao.createObj(personShare);
+            sharePeriod.setStage(stage);
+            sharePeriod.setNote("Add");
+            sharePeriod.setStockQuantity(personShareRequest.getStockQuantity());
+            sharePeriod.setPeriod(personShareRequest.getPeriod());
+            personShareDao.createObj(sharePeriod);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
 
-        return personShare;
+        return sharePeriod;
     }
 
     @Override
-    public PersonShare subtract(PersonShareRequest personShareRequest) throws DatabaseException {
-        PersonShare personShare = new PersonShare();
+    public SharePeriod subtract(PersonShareRequest personShareRequest) throws DatabaseException {
+        SharePeriod sharePeriod = new SharePeriod();
         try {
             Person person = new Person();
             person.setId(UUID.fromString(personShareRequest.getPerson().getId()));
-            personShare.setPerson(person);
+            sharePeriod.setPerson(person);
 
             Stage stage = new Stage();
             stage.setId(UUID.fromString(personShareRequest.getStage().getId()));
-            personShare.setStage(stage);
-            personShare.setNote("Subtract");
-            personShare.setStockQuantity(personShareRequest.getStockQuantity());
-            personShare.setPeriod(personShareRequest.getPeriod());
-            personShareDao.createObj(personShare);
+            sharePeriod.setStage(stage);
+            sharePeriod.setNote("Subtract");
+            sharePeriod.setStockQuantity(personShareRequest.getStockQuantity());
+            sharePeriod.setPeriod(personShareRequest.getPeriod());
+            personShareDao.createObj(sharePeriod);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
 
-        return personShare;
+        return sharePeriod;
     }
 }
