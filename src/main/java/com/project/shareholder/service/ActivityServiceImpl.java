@@ -59,7 +59,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public List<Activity> retrieveByPersonId(String personId) throws NotFoundException {
         Person person = personDao.retrieveById(UUID.fromString(personId));
-        return activityDao.retrieveByPersonId(person);
+        return activityDao.retrieveByPerson(person);
     }
 
     // Retrieve all activities

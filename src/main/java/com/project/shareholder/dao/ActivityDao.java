@@ -14,5 +14,5 @@ public interface ActivityDao extends CommonHibernateInterface<Serializable, Acti
     Activity retrieveById(UUID id) throws NotFoundException;
 
     // Retrieve activity by person id
-    List<Activity> retrieveByPersonId(Person person) throws NotFoundException;
+    List<Activity> retrieveByPerson(Person person) throws NotFoundException;
 }

@@ -26,7 +26,7 @@ public class ActivityDaoImpl extends CommonHibernate<Activity> implements Activi
     }
 
     @Override
-    public List<Activity> retrieveByPersonId(Person person) throws NotFoundException {
+    public List<Activity> retrieveByPerson(Person person) throws NotFoundException {
         String sql = "from Activity a where a.person = :person";
         try {
             Query query = getCurrentSession().createQuery(sql, Activity.class)

@@ -2,6 +2,7 @@ package com.project.shareholder.dao;
 
 import com.project.shareholder.common.CommonHibernate;
 import com.project.shareholder.exception.NotFoundException;
+import com.project.shareholder.model.Person;
 import com.project.shareholder.model.Role;
 import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
@@ -29,6 +30,18 @@ public class RoleDaoImpl extends CommonHibernate<Role> implements RoleDao {
         try {
             Query query = getCurrentSession().createQuery(sql, Role.class)
                     .setParameter("name", name);
+            return (Role) query.getSingleResult();
+        } catch (Exception exception) {
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+        }
+    }
+
+    @Override
+    public Role retrieveByPerson(Person person) throws NotFoundException {
+        String sql = "select p.role from Person p where p = :person";
+        try {
+            Query query = getCurrentSession().createQuery(sql, Role.class)
+                    .setParameter("person", person);
             return (Role) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);

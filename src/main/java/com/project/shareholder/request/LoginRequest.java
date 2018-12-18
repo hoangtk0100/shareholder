@@ -5,19 +5,21 @@ import org.hibernate.validator.constraints.NotBlank;
 import java.util.UUID;
 
 public class LoginRequest {
-    @NotBlank(message = "Id must not be empty")
     private UUID id;
 
     @NotBlank(message = "Username must not be empty")
     private String username;
 
-    @NotBlank(message = "Full name must not be empty")
+    @NotBlank(message = "Password must not be empty")
+    private String password;
+
+//    @NotBlank(message = "Full name must not be empty")
     private String fullName;
 
-    @NotBlank(message = "Email must not be empty")
+//    @NotBlank(message = "Email must not be empty")
     private String email;
 
-    @NotBlank(message = "Avatar must not be empty")
+//    @NotBlank(message = "Avatar must not be empty")
     private String avatar;
 
     // Getter and setter methods
@@ -35,6 +37,14 @@ public class LoginRequest {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFullName() {
