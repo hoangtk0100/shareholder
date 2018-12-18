@@ -44,7 +44,7 @@ public class Utility {
     /**
      * convert String to YearMonth
      * */
-    public static YearMonth convertPeriod(String period) {
+    public static YearMonth convertStringToYearMonth(String period) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(Constant.DATE_FORMAT_YYYYMM);
         return YearMonth.parse(period, formatter);
     }
@@ -52,11 +52,26 @@ public class Utility {
     /**
      * convert String to Date
      * */
-    public static Date convertDate(String dateString) {
+    public static Date convertStringToDate(String dateString) {
         SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_YYYYMMDD);
         Date date = new Date();
         try {
-            formatter.parse(dateString);
+            date = formatter.parse(dateString);
+        } catch (ParseException exception) {
+            exception.printStackTrace();
+        }
+
+        return date;
+    }
+
+    /**
+     * convert YearMonth String to Date
+     * */
+    public static Date convertYearMonthStringToDate(String dateString) {
+        SimpleDateFormat formatter = new SimpleDateFormat(Constant.DATE_FORMAT_YYYYMM);
+        Date date = new Date();
+        try {
+            date = formatter.parse(dateString);
         } catch (ParseException exception) {
             exception.printStackTrace();
         }

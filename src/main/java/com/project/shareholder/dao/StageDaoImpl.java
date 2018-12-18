@@ -7,6 +7,7 @@ import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Repository
@@ -36,9 +37,9 @@ public class StageDaoImpl extends CommonHibernate<Stage> implements StageDao {
         }
     }
 
-    @Override
-    public Stage retrieveByPeriod(String period) throws NotFoundException {
-        String sql = "from Stage s where month(s.dateCreatedAt) = month(:period) and year(s.dateCreatedAt) = year(:period)";
+    @Override // @Fix
+    public Stage retrieveByPeriod(Date period) throws NotFoundException {
+        String sql = "from Stage s where :period between s.dateStartedAt and s.dateEndedAt";
         try {
             Query query = getCurrentSession().createQuery(sql, Stage.class)
                     .setParameter("period", period);

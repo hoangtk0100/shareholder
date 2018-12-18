@@ -12,7 +12,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "stage",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}),
+                @UniqueConstraint(columnNames = {"date_started_at"}),
+                @UniqueConstraint(columnNames = {"date_ended_at"})
         }
 )
 
@@ -33,11 +35,11 @@ public class Stage extends CommonSerialize {
     private double quantity;
 
     @NotNull
-    @Column(name = "date_started_at")
+    @Column(name = "date_started_at", columnDefinition = "DATE")
     private Date dateStartedAt;
 
     @NotNull
-    @Column(name = "date_ended_at")
+    @Column(name = "date_ended_at", columnDefinition = "DATE")
     private Date dateEndedAt;
 
     @Column(name = "note")

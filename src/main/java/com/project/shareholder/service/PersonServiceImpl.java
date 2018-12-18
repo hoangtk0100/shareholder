@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
-import static com.project.shareholder.util.Utility.convertDate;
+import static com.project.shareholder.util.Utility.convertStringToDate;
 
 @Service
 @Transactional
@@ -35,7 +35,7 @@ public class PersonServiceImpl implements PersonService {
         person.setPassword(personRequest.getPassword());
         person.setEmail(personRequest.getEmail());
         person.setAddress(personRequest.getAddress());
-        person.setBirthday(convertDate(personRequest.getBirthday()));
+        person.setBirthday(convertStringToDate(personRequest.getBirthday()));
         person.setAvatar(personRequest.getAvatar());
         person.setGender(personRequest.isGender());
         person.setPersonalId(personRequest.getPersonalId());
@@ -78,7 +78,7 @@ public class PersonServiceImpl implements PersonService {
         person.setPassword(personRequest.getPassword());
         person.setEmail(personRequest.getEmail());
         person.setAddress(personRequest.getAddress());
-        person.setBirthday(convertDate(personRequest.getBirthday()));
+        person.setBirthday(convertStringToDate(personRequest.getBirthday()));
         person.setAvatar(personRequest.getAvatar());
         person.setGender(personRequest.isGender());
         person.setPersonalId(personRequest.getPersonalId());

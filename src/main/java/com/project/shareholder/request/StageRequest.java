@@ -3,11 +3,10 @@ package com.project.shareholder.request;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.project.shareholder.util.Utility.convertDate;
+import static com.project.shareholder.util.Utility.convertStringToDate;
 
 public class StageRequest {
     private UUID id;
@@ -15,7 +14,7 @@ public class StageRequest {
     @NotBlank(message = "Name must not be empty")
     private String name;
 
-    @NotBlank(message = "Stock quantity must not be empty")
+    @NotNull(message = "Stock quantity must not be empty")
     private double quantity;
 
     @NotBlank(message = "Start date must not be empty")
@@ -52,7 +51,7 @@ public class StageRequest {
     }
 
     public Date getDateStartedAt() {
-        return convertDate(dateStartedAt);
+        return convertStringToDate(dateStartedAt);
     }
 
     public void setDateStartedAt(String dateStartedAt) {
@@ -60,7 +59,7 @@ public class StageRequest {
     }
 
     public Date getDateEndedAt() {
-        return convertDate(dateEndedAt);
+        return convertStringToDate(dateEndedAt);
     }
 
     public void setDateEndedAt(String dateEndedAt) {

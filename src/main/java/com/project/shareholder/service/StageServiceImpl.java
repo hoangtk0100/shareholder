@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+import static com.project.shareholder.util.Utility.convertYearMonthStringToDate;
+
 @Service
 @Transactional
 public class StageServiceImpl implements StageService {
@@ -95,7 +97,7 @@ public class StageServiceImpl implements StageService {
 
     @Override
     public Stage retrieveByPeriod(String period) throws NotFoundException {
-        return stageDao.retrieveByPeriod(period);
+        return stageDao.retrieveByPeriod(convertYearMonthStringToDate(period));
     }
 
     @Override
