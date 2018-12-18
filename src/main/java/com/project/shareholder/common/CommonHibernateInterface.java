@@ -12,13 +12,25 @@ public interface CommonHibernateInterface<Serializable, T> {
      * and it also update the passed parameter T, so we do not need to return obj again.
      * @param t
      */
-    public void saveObj(Serializable t);
+    public void createObj(Serializable t);
 
     /**
      * Update object in DB
      * @param t
      */
     public void updateObj(Serializable t);
+
+    /**
+     * Deactivate object from DB
+     * @param t
+     */
+    public void deactivateObj(Serializable t);
+
+    /**
+     * Deactivate objects from DB
+     * @param objs
+     */
+    public void deactivateObjs(Collection<T> objs);
 
     /**
      * Delete object from DB
@@ -33,18 +45,18 @@ public interface CommonHibernateInterface<Serializable, T> {
     public void deleteObjs(Collection<T> objs);
 
     /**
-     * Find all objects
+     * Retrieve all objects
      * @return
      */
-    public List<T> findAll();
+    public List<T> retrieveAll();
 
     /**
-     * Find object by id in DB
+     * Retrieve object by id in DB
      * @param id
      * @return
      * @throws DatabaseException
      */
-    public T findObjById(Long id) throws DatabaseException;
+    public T retrieveObjById(UUID id) throws DatabaseException;
 
     /**
      * Get table name in DB
@@ -59,7 +71,7 @@ public interface CommonHibernateInterface<Serializable, T> {
     public Session getCurrentSession();
 
     /**
-     * Get current session
+     * Close current session
      * @param
      */
     public void shutdown(Serializable t);

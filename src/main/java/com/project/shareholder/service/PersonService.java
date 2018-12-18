@@ -1,0 +1,43 @@
+package com.project.shareholder.service;
+
+import com.project.shareholder.exception.DatabaseException;
+import com.project.shareholder.exception.NotFoundException;
+import com.project.shareholder.model.Person;
+import com.project.shareholder.request.PersonRequest;
+
+import java.util.List;
+
+public interface PersonService {
+    // Create new person
+    Person create(PersonRequest personRequest) throws DatabaseException;
+
+    // Update person information
+    Person update(PersonRequest personRequest) throws DatabaseException;
+
+    // Deactivate person
+    Person deactivate(String id) throws DatabaseException;
+
+    // Delete person
+    String delete(String id) throws DatabaseException;
+
+    // Retrieve person by id
+    Person retrieveById(String id) throws NotFoundException;
+
+    // Retrieve person by username
+    Person retrieveByUsername(String username) throws NotFoundException;
+
+    // Retrieve person by personal id
+    Person retrieveByPersonalId(String personalId) throws NotFoundException;
+
+    // Retrieve person phone number
+    Person retrieveByPhoneNumber(String phoneNumber) throws NotFoundException;
+
+    // Retrieve all persons
+    List<Person> list();
+
+    // Update person's total stock
+    Person updateTotalStock(String id, double stockQuantity) throws DatabaseException;
+
+    // Add referral
+    Person addReferral(PersonRequest personRequest) throws DatabaseException;
+}

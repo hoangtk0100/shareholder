@@ -1,43 +1,26 @@
 package com.project.shareholder.common;
 
-import com.project.shareholder.util.Utility;
-
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
+import java.sql.Timestamp;
 
 @MappedSuperclass
 public class CommonSerialize implements Serializable {
 
-    // Columns
-    @Column(name = "id", length = Utility.UID_LENGTH, unique = true, nullable = false)
-    private UUID id;
-
     @Column(name = "active")
-    private Boolean active = true;
+    private Boolean active;
 
     @Column(name = "date_created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreatedAt = new Date();
+    private Timestamp dateCreatedAt;
 
     @Column(name = "date_updated_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateUpdatedAt = new Date();
+    private Timestamp dateUpdatedAt;
 
     @Column(name = "date_deleted_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateDeletedAt = new Date();
+    private Timestamp dateDeletedAt;
 
-    // Methods
-    public String getId() {
-        return id.toString();
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
+    // Getter and setter methods
     public Boolean getActive() {
         return active;
     }
@@ -46,27 +29,27 @@ public class CommonSerialize implements Serializable {
         this.active = active;
     }
 
-    public Date getDateCreatedAt() {
+    public Timestamp getDateCreatedAt() {
         return dateCreatedAt;
     }
 
-    public void setDateCreatedAt(Date dateCreatedAt) {
+    public void setDateCreatedAt(Timestamp dateCreatedAt) {
         this.dateCreatedAt = dateCreatedAt;
     }
 
-    public Date getDateUpdatedAt() {
+    public Timestamp getDateUpdatedAt() {
         return dateUpdatedAt;
     }
 
-    public void setDateUpdatedAt(Date dateUpdatedAt) {
+    public void setDateUpdatedAt(Timestamp dateUpdatedAt) {
         this.dateUpdatedAt = dateUpdatedAt;
     }
 
-    public Date getDateDeletedAt() {
+    public Timestamp getDateDeletedAt() {
         return dateDeletedAt;
     }
 
-    public void setDateDeletedAt(Date dateDeletedAt) {
+    public void setDateDeletedAt(Timestamp dateDeletedAt) {
         this.dateDeletedAt = dateDeletedAt;
     }
 }
