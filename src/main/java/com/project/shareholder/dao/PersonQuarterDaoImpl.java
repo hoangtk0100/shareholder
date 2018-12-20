@@ -51,7 +51,7 @@ public class PersonQuarterDaoImpl extends CommonHibernate<PersonQuarter> impleme
     }
 
     @Override
-    public PersonQuarter retrieveByPersonStage(Quarter quarter, Person person) throws NotFoundException {
+    public PersonQuarter retrieveByPersonQuarter(Person person, Quarter quarter) throws NotFoundException {
         String sql = "from PersonQuarter p where p.quarter = :quarter and p.person = :person";
         try {
             Query query = getCurrentSession().createQuery(sql, PersonQuarter.class)

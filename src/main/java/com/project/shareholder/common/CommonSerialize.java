@@ -21,7 +21,7 @@ public class CommonSerialize implements Serializable {
     private Timestamp dateDeletedAt;
 
     // Getter and setter methods
-    public Boolean getActive() {
+    public Boolean isActive() {
         return active;
     }
 

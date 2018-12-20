@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+import static com.project.shareholder.util.Utility.convertStringToDate;
 import static com.project.shareholder.util.Utility.convertYearMonthStringToDate;
 
 @Service
@@ -25,9 +26,9 @@ public class StageServiceImpl implements StageService {
     public Stage create(StageRequest stageRequest) throws DatabaseException {
         Stage stage = new Stage();
         stage.setName(stageRequest.getName());
-        stage.setQuantity(stageRequest.getQuantity());
-        stage.setDateStartedAt(stageRequest.getDateStartedAt());
-        stage.setDateEndedAt(stageRequest.getDateEndedAt());
+        stage.setStockQuantity(stageRequest.getStockQuantity());
+        stage.setDateStartedAt(convertStringToDate(stageRequest.getDateStartedAt()));
+        stage.setDateEndedAt(convertStringToDate(stageRequest.getDateEndedAt()));
         stage.setNote(stageRequest.getNote());
         try {
             stageDao.createObj(stage);
@@ -41,11 +42,11 @@ public class StageServiceImpl implements StageService {
     @Override
     public Stage update(StageRequest stageRequest) throws DatabaseException {
         Stage stage = new Stage();
-        stage.setId(UUID.fromString(stageRequest.getId()));
+        stage.setId(stageRequest.getId());
         stage.setName(stageRequest.getName());
-        stage.setQuantity(stageRequest.getQuantity());
-        stage.setDateStartedAt(stageRequest.getDateStartedAt());
-        stage.setDateEndedAt(stageRequest.getDateEndedAt());
+        stage.setStockQuantity(stageRequest.getStockQuantity());
+        stage.setDateStartedAt(convertStringToDate(stageRequest.getDateStartedAt()));
+        stage.setDateEndedAt(convertStringToDate(stageRequest.getDateEndedAt()));
         stage.setNote(stageRequest.getNote());
         try {
             stageDao.updateObj(stage);

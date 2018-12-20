@@ -8,14 +8,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "person_quarter",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"person_id", "quarter_id"}),
-                             @UniqueConstraint(columnNames = {"id"}),
-                             @UniqueConstraint(columnNames = {"period"})
+                             @UniqueConstraint(columnNames = {"id"})
         }
 )
 
@@ -40,7 +40,7 @@ public class PersonQuarter extends CommonSerialize {
     private int referralQuantity;
 
     @Column(name = "referral_ids")
-    private List<UUID> referralIds;
+    private ArrayList<UUID> referralIds;
 
     @Column(name = "note")
     private String note;
@@ -92,11 +92,11 @@ public class PersonQuarter extends CommonSerialize {
         this.referralQuantity = referralQuantity;
     }
 
-    public List<UUID> getReferralIds() {
+    public ArrayList<UUID> getReferralIds() {
         return referralIds;
     }
 
-    public void setReferralIds(List<UUID> referralIds) {
+    public void setReferralIds(ArrayList<UUID> referralIds) {
         this.referralIds = referralIds;
     }
 

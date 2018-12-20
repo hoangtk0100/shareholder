@@ -3,6 +3,7 @@ package com.project.shareholder.request;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,8 +14,8 @@ public class PersonQuarterRequest {
     private double stockQuantity;
 
     private double bonusStock;
-    private int refferalQuantity;
-    private List<UUID> referralIds;
+    private int referralQuantity;
+    private ArrayList<UUID> referralIds;
 
     @NotNull(message = "Person must not be null")
     private UUID personId;
@@ -50,19 +51,19 @@ public class PersonQuarterRequest {
         this.bonusStock = bonusStock;
     }
 
-    public int getRefferalQuantity() {
-        return refferalQuantity;
+    public int getReferralQuantity() {
+        return referralQuantity;
     }
 
-    public void setRefferalQuantity(int refferalQuantity) {
-        this.refferalQuantity = refferalQuantity;
+    public void setReferralQuantity(int referralQuantity) {
+        this.referralQuantity = referralQuantity;
     }
 
-    public List<UUID> getReferralIds() {
+    public ArrayList<UUID> getReferralIds() {
         return referralIds;
     }
 
-    public void setReferralIds(List<UUID> referralIds) {
+    public void setReferralIds(ArrayList<UUID> referralIds) {
         this.referralIds = referralIds;
     }
 
