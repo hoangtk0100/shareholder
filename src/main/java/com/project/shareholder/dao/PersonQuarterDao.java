@@ -20,6 +20,6 @@ public interface PersonQuarterDao extends CommonHibernateInterface<Serializable,
     // Retrieve person quarter by person
     List<PersonQuarter> retrieveByPerson(Person person) throws NotFoundException;
 
-    // Retrieve person quarter by person - stage
-    PersonQuarter retrieveByPersonStage(Quarter quarter, Person person) throws NotFoundException;
+    // Retrieve person quarter by person - quarter
+    PersonQuarter retrieveByPersonQuarter(Person person, Quarter quarter) throws NotFoundException;
 }

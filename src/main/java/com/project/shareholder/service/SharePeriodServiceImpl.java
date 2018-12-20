@@ -11,7 +11,7 @@
 //
 //import java.util.UUID;
 //
-//public class SharePeriodPeriodServiceImpl implements SharePeriodService {
+//public class SharePeriodServiceImpl implements SharePeriodService {
 //    @Autowired
 //    private SharePeriodDao sharePeriodDao;
 //
@@ -19,13 +19,6 @@
 //    public SharePeriod add(SharePeriodRequest personShareRequest) throws DatabaseException {
 //        SharePeriod sharePeriod = new SharePeriod();
 //        try {
-//            Person person = new Person();
-//            person.setId(UUID.fromString(personShareRequest.getPerson().getId()));
-//            sharePeriod.setPerson(person);
-//
-//            Stage stage = new Stage();
-//            stage.setId(UUID.fromString(personShareRequest.getStage().getId()));
-//            sharePeriod.setStage(stage);
 //            sharePeriod.setNote("Add");
 //            sharePeriod.setStockQuantity(personShareRequest.getStockQuantity());
 //            sharePeriod.setPeriod(personShareRequest.getPeriod());

@@ -38,7 +38,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public Role update(RoleRequest roleRequest) throws DatabaseException {
         Role role = new Role();
-        role.setId(UUID.fromString(roleRequest.getId()));
+        role.setId(roleRequest.getId());
         role.setName(roleRequest.getName());
         try {
             roleDao.updateObj(role);

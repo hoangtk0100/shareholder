@@ -7,7 +7,7 @@ import com.project.shareholder.request.RoleRequest;
 
 import java.util.List;
 
-public interface    RoleService {
+public interface RoleService {
     // Create a new role
     Role create(RoleRequest roleRequest) throws DatabaseException;
 

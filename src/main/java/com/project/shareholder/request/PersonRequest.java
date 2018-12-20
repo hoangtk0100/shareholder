@@ -35,7 +35,7 @@ public class PersonRequest {
     private String avatar;
     private double totalStock;
     private double totalProfit;
-    private UUID referrerId;
+    private String referrerUsername;
     private List<UUID> personProfitIds;
     private List<UUID> personQuarterIds;
 
@@ -152,12 +152,12 @@ public class PersonRequest {
         this.totalProfit = totalProfit;
     }
 
-    public UUID getReferrerId() {
-        return referrerId;
+    public String getReferrerUsername() {
+        return referrerUsername;
     }
 
-    public void setReferrerId(UUID referrerId) {
-        this.referrerId = referrerId;
+    public void setReferrerUsername(String referrerUsername) {
+        this.referrerUsername = referrerUsername;
     }
 
     public List<UUID> getPersonProfitIds() {

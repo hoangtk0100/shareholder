@@ -5,7 +5,6 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Profit;
 import com.project.shareholder.request.ProfitRequest;
 
-import java.time.YearMonth;
 import java.util.List;
 
 public interface ProfitService {

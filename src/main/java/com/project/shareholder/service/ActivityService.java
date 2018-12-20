@@ -14,7 +14,7 @@ public interface ActivityService {
     // Retrieve activity by id
     Activity retrieveById(String id) throws NotFoundException;
 
-    // Retrieve person's activity
+    // Retrieve person's activity by person id
     List<Activity> retrieveByPersonId(String personId) throws NotFoundException;
 
     // Retrieve all activities

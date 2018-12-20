@@ -83,6 +83,7 @@ public class PersonProfitServiceImpl implements PersonProfitService {
         return personProfitDao.retrieveByPersonProfit(person, profit);
     }
 
+    // Retrieve all PersonProfits
     @Override
     public List<PersonProfit> list() {
         return personProfitDao.retrieveAll();

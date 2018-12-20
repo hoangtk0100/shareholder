@@ -29,7 +29,6 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person create(PersonRequest personRequest) throws DatabaseException {
         Person person = new Person();
-        String referrerUsername = personRequest.getReferrerUsername();
         person.setFullName(personRequest.getFullName());
         person.setUsername(personRequest.getUsername());
         person.setPassword(personRequest.getPassword());
@@ -40,28 +39,26 @@ public class PersonServiceImpl implements PersonService {
         person.setGender(personRequest.isGender());
         person.setPersonalId(personRequest.getPersonalId());
         person.setPhoneNumber(personRequest.getPhoneNumber());
-        person.setRefererUsername(referrerUsername);
+//@fix
         try {
             // Set role
             Role role;
-            role = roleDao.retrieveById(UUID.fromString(personRequest.getRoleId()));
+            role = roleDao.retrieveById(personRequest.getRoleId());
             person.setRole(role);
 
-            // Create new person
-            personDao.createObj(person);
-
             // Add referral
+            String referrerUsername = personRequest.getReferrerUsername();
             if (!referrerUsername.trim().isEmpty()) {
                 Person referrer = personDao.retrieveByUsername(referrerUsername);
-                if (referrer == null) {
+                if (null == referrer) {
                     throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
                 }
 
-                List<Person> persons = referrer.getReferrals();
-                persons.add(person);
-                referrer.setReferrals(persons);
-                personDao.updateObj(referrer);
+                person.setRefererId(referrer.getId());
             }
+
+            // Create new person
+            personDao.createObj(person);
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
@@ -72,7 +69,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Person update(PersonRequest personRequest) throws DatabaseException {
         Person person = new Person();
-        person.setId(UUID.fromString(personRequest.getId()));
+        person.setId(personRequest.getId());
         person.setFullName(personRequest.getFullName());
         person.setUsername(personRequest.getUsername());
         person.setPassword(personRequest.getPassword());
@@ -153,7 +150,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person updateTotalStock(String id, double stockQuantity) throws DatabaseException {
-        Person person;
+        Person person = new Person();
         try {
             person = personDao.retrieveById(UUID.fromString(id));
             person.setTotalStock(stockQuantity);
@@ -167,18 +164,18 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person addReferral(PersonRequest personRequest) throws DatabaseException {
-        Person referer;
-        try {
-            referer = personDao.retrieveByUsername(personRequest.getReferrerUsername());
-            Person referral = personDao.retrieveById(UUID.fromString(personRequest.getId()));
-
-            List<Person> persons = referer.getReferrals();
-            persons.add(referral);
-            referer.setReferrals(persons);
-            personDao.updateObj(referer);
-        } catch (Exception exception) {
-            throw new DatabaseException(Constants.DATABASE_MESSAGE);
-        }
+        Person referer = new Person();
+//        try {
+//            referer = personDao.retrieveByUsername(personRequest.getReferrerUsername());
+//            Person referral = personDao.retrieveById(UUID.fromString(personRequest.getId()));
+//
+//            List<Person> persons = referer.getReferrals();
+//            persons.add(referral);
+//            referer.setReferrals(persons);
+//            personDao.updateObj(referer);
+//        } catch (Exception exception) {
+//            throw new DatabaseException(Constants.DATABASE_MESSAGE);
+//        }
 
         return referer;
     }

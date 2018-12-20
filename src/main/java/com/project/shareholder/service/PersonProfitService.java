@@ -6,7 +6,6 @@ import com.project.shareholder.model.PersonProfit;
 import com.project.shareholder.request.PersonProfitRequest;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface PersonProfitService {
     // Create person profit
@@ -24,5 +23,6 @@ public interface PersonProfitService {
     // Retrieve person profit by person profit
     PersonProfit retrieveByPersonProfit(String personId, String profitId) throws NotFoundException;
 
+    // Retrieve all PersonProfits
     List<PersonProfit> list();
 }
