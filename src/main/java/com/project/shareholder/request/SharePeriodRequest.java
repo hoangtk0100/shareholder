@@ -1,5 +1,6 @@
 package com.project.shareholder.request;
 
+import com.project.shareholder.model.ShareAction;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
@@ -9,15 +10,16 @@ import java.util.UUID;
 public class SharePeriodRequest {
     private UUID id;
 
-    @NotBlank(message = "Stock quantity must not be empty")
+    @NotNull(message = "Stock quantity must not be empty")
     private double stockQuantity;
 
-    @NotBlank(message = "Period must be specific")
+    @NotNull(message = "Period must be specific")
     private Timestamp period;
 
     @NotNull(message = "Person quarter must not be null")
     private UUID personQuarterId;
 
+    private ShareAction shareAction;
     private String note;
 
     // Getter and setter methods
@@ -51,6 +53,14 @@ public class SharePeriodRequest {
 
     public void setPersonQuarterId(UUID personQuarterId) {
         this.personQuarterId = personQuarterId;
+    }
+
+    public ShareAction getShareAction() {
+        return shareAction;
+    }
+
+    public void setShareAction(ShareAction shareAction) {
+        this.shareAction = shareAction;
     }
 
     public String getNote() {

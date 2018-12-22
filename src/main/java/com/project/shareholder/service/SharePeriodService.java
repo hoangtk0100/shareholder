@@ -10,4 +10,7 @@ public interface SharePeriodService {
 
     // Subtract share
     SharePeriod subtract(SharePeriodRequest sharePeriodRequest) throws DatabaseException;
+
+    // Bonus share
+    SharePeriod bonus(SharePeriodRequest sharePeriodRequest) throws DatabaseException;
 }

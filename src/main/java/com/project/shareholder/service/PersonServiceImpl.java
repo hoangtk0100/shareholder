@@ -43,7 +43,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             // Set role
             Role role;
-            role = roleDao.retrieveById(personRequest.getRoleId());
+            role = roleDao.retrieveByName(personRequest.getRoleName());
             person.setRole(role);
 
             // Add referral

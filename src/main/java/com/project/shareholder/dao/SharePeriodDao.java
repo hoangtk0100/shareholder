@@ -6,6 +6,7 @@ import com.project.shareholder.model.PersonQuarter;
 import com.project.shareholder.model.SharePeriod;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 public interface SharePeriodDao extends CommonHibernateInterface<Serializable, SharePeriod> {
@@ -13,5 +14,5 @@ public interface SharePeriodDao extends CommonHibernateInterface<Serializable, S
     SharePeriod retrieveById(UUID id) throws NotFoundException;
 
     // Retrieve person share by person - quarter
-    SharePeriod retrieveByPersonQuarter(PersonQuarter personQuarter) throws NotFoundException;
+    List<SharePeriod> retrieveByPersonQuarter(PersonQuarter personQuarter) throws NotFoundException;
 }

@@ -8,6 +8,7 @@ import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -18,19 +19,19 @@ public class SharePeriodDaoImpl extends CommonHibernate<SharePeriod> implements 
         try {
             Query query = getCurrentSession().createQuery(sql, SharePeriod.class)
                     .setParameter("id", id);
-            return (SharePeriod) query.getResultList();
+            return (SharePeriod) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
     }
 
     @Override
-    public SharePeriod retrieveByPersonQuarter(PersonQuarter personQuarter) throws NotFoundException {
+    public List<SharePeriod> retrieveByPersonQuarter(PersonQuarter personQuarter) throws NotFoundException {
         String sql = "from SharePeriod s where s.personQuarter = :personQuarter";
         try {
             Query query = getCurrentSession().createQuery(sql, SharePeriod.class)
                     .setParameter("personQuarter", personQuarter);
-            return (SharePeriod) query.getResultList();
+            return query.getResultList();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }

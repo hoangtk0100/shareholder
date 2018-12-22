@@ -16,7 +16,7 @@ public class PersonRequest {
     private String password;
 
     @NotNull(message = "Permission must not be null")
-    private UUID roleId;
+    private String roleName;
 
     private String personalId;
 
@@ -64,12 +64,12 @@ public class PersonRequest {
         this.password = password;
     }
 
-    public UUID getRoleId() {
-        return roleId;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRoleId(UUID roleId) {
-        this.roleId = roleId;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String getPersonalId() {
