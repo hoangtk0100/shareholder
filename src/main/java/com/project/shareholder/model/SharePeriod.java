@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
-@Table(name = "person_period",
+@Table(name = "share_period",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}),
                              @UniqueConstraint(columnNames = {"period"})
         }
@@ -31,6 +31,10 @@ public class SharePeriod extends CommonSerialize {
     @NotNull
     @Column(name = "period", unique = true)
     private Timestamp period;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "action")
+    private ShareAction shareAction;
 
     @Column(name = "note")
     private String note;
@@ -63,6 +67,14 @@ public class SharePeriod extends CommonSerialize {
 
     public void setPeriod(Timestamp period) {
         this.period = period;
+    }
+
+    public ShareAction getShareAction() {
+        return shareAction;
+    }
+
+    public void setShareAction(ShareAction shareAction) {
+        this.shareAction = shareAction;
     }
 
     public String getNote() {

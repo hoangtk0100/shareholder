@@ -1,7 +1,5 @@
 package com.project.shareholder.request;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +8,7 @@ import java.util.UUID;
 public class PersonQuarterRequest {
     private UUID id;
 
-    @NotBlank(message = "Stock quantity must not be empty")
+    @NotNull(message = "Stock quantity must not be empty")
     private double stockQuantity;
 
     private double bonusStock;

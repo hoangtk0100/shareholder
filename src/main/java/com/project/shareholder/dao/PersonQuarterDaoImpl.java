@@ -9,6 +9,7 @@ import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,6 +58,19 @@ public class PersonQuarterDaoImpl extends CommonHibernate<PersonQuarter> impleme
             Query query = getCurrentSession().createQuery(sql, PersonQuarter.class)
                     .setParameter("quarter", quarter)
                     .setParameter("person", person);
+            return (PersonQuarter) query.getSingleResult();
+        } catch (Exception exception) {
+            throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+        }
+    }
+
+    @Override
+    public PersonQuarter retrieveByPersonPeriod(Person person, Date period) throws NotFoundException {
+        String sql = "from PersonQuarter p where (p.person = :person) and (:period between p.dateStartedAt and p.dateEndedAt)";
+        try {
+            Query query = getCurrentSession().createQuery(sql, PersonQuarter.class)
+                    .setParameter("person", person)
+                    .setParameter("period", period);
             return (PersonQuarter) query.getSingleResult();
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);

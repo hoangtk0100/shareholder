@@ -7,6 +7,7 @@ import com.project.shareholder.model.PersonQuarter;
 import com.project.shareholder.model.Quarter;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,4 +23,7 @@ public interface PersonQuarterDao extends CommonHibernateInterface<Serializable,
 
     // Retrieve person quarter by person - quarter
     PersonQuarter retrieveByPersonQuarter(Person person, Quarter quarter) throws NotFoundException;
+
+    // Retrieve person quarter by person - period
+    PersonQuarter retrieveByPersonPeriod(Person person, Date period) throws NotFoundException;
 }

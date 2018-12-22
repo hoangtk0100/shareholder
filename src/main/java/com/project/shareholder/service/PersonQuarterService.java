@@ -11,6 +11,12 @@ public interface PersonQuarterService {
     // Create person quarter
     PersonQuarter create(PersonQuarterRequest personQuarterRequest) throws DatabaseException;
 
+    // Update person quarter
+    PersonQuarter update(PersonQuarterRequest personQuarterRequest) throws DatabaseException;
+
+    // Deactivate person quarter
+    PersonQuarter deactivate(String id) throws DatabaseException;
+
     // Retrieve person quarter by id
     PersonQuarter retrieveById(String id) throws NotFoundException;
 
