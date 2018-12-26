@@ -16,7 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
+
+import static com.project.shareholder.util.Utility.isEmptyUUID;
 
 @Service
 @Transactional
@@ -35,9 +39,24 @@ public class SharePeriodServiceImpl implements SharePeriodService {
         SharePeriod sharePeriod = new SharePeriod();
         try {
             // Check if person-quarter exists
-            PersonQuarter personQuarter = personQuarterDao.retrieveById(sharePeriodRequest.getPersonQuarterId());
-            if (null == personQuarter) {
-                throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+            PersonQuarter personQuarter = new PersonQuarter();
+            if(!isEmptyUUID(sharePeriodRequest.getPersonQuarterId())) {
+                personQuarter = personQuarterDao.retrieveById(sharePeriodRequest.getPersonQuarterId());
+                if (null == personQuarter) {
+                    throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+                }
+            } else {
+                if(isEmptyUUID(sharePeriodRequest.getPersonId())) {
+                    throw new InvalidArgumentException(Constants.INVALID_ARGUMENT_MESSAGE);
+                }
+
+                UUID personId = sharePeriodRequest.getPersonId();
+                Person person = personDao.retrieveById(personId);
+                Date currentDate = new Date();
+                personQuarter = personQuarterDao.retrieveByPersonPeriod(person, currentDate);
+                if (null == personQuarter) {
+                    throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+                }
             }
 
             // Set note content default if it's empty
@@ -78,9 +97,24 @@ public class SharePeriodServiceImpl implements SharePeriodService {
         try {
             // Stock quantity left = currentStockQuantity*[100-subtractedStockPercent]/100 - 10
             // Check if person-quarter exists
-            PersonQuarter personQuarter = personQuarterDao.retrieveById(sharePeriodRequest.getPersonQuarterId());
-            if (null == personQuarter) {
-                throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+            PersonQuarter personQuarter = new PersonQuarter();
+            if(!isEmptyUUID(sharePeriodRequest.getPersonQuarterId())) {
+                personQuarter = personQuarterDao.retrieveById(sharePeriodRequest.getPersonQuarterId());
+                if (null == personQuarter) {
+                    throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+                }
+            } else {
+                if(isEmptyUUID(sharePeriodRequest.getPersonId())) {
+                    throw new InvalidArgumentException(Constants.INVALID_ARGUMENT_MESSAGE);
+                }
+
+                UUID personId = sharePeriodRequest.getPersonId();
+                Person person = personDao.retrieveById(personId);
+                Date currentDate = new Date();
+                personQuarter = personQuarterDao.retrieveByPersonPeriod(person, currentDate);
+                if (null == personQuarter) {
+                    throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+                }
             }
 
             // Check if subtracted stock percent is valid
@@ -126,9 +160,24 @@ public class SharePeriodServiceImpl implements SharePeriodService {
     public SharePeriod bonus(SharePeriodRequest sharePeriodRequest) throws DatabaseException {
         SharePeriod sharePeriod = new SharePeriod();
         try {
-            PersonQuarter personQuarter = personQuarterDao.retrieveById(sharePeriodRequest.getPersonQuarterId());
-            if (null == personQuarter) {
-                throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+            PersonQuarter personQuarter = new PersonQuarter();
+            if(!isEmptyUUID(sharePeriodRequest.getPersonQuarterId())) {
+                personQuarter = personQuarterDao.retrieveById(sharePeriodRequest.getPersonQuarterId());
+                if (null == personQuarter) {
+                    throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+                }
+            } else {
+                if(isEmptyUUID(sharePeriodRequest.getPersonId())) {
+                    throw new InvalidArgumentException(Constants.INVALID_ARGUMENT_MESSAGE);
+                }
+
+                UUID personId = sharePeriodRequest.getPersonId();
+                Person person = personDao.retrieveById(personId);
+                Date currentDate = new Date();
+                personQuarter = personQuarterDao.retrieveByPersonPeriod(person, currentDate);
+                if (null == personQuarter) {
+                    throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+                }
             }
 
             sharePeriod.setPersonQuarter(personQuarter);

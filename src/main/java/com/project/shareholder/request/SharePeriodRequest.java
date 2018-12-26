@@ -19,6 +19,9 @@ public class SharePeriodRequest {
     @NotNull(message = "Person quarter must not be null")
     private UUID personQuarterId;
 
+    private UUID personId;
+    private UUID quarterId;
+
     private ShareAction shareAction;
     private String note;
 
@@ -69,5 +72,21 @@ public class SharePeriodRequest {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public UUID getPersonId() {
+        return personId;
+    }
+
+    public void setPersonId(UUID personId) {
+        this.personId = personId;
+    }
+
+    public UUID getQuarterId() {
+        return quarterId;
+    }
+
+    public void setQuarterId(UUID quarterId) {
+        this.quarterId = quarterId;
     }
 }
