@@ -164,7 +164,7 @@ public class ProfitServiceImpl implements ProfitService {
                     return null;
                 }
             };
-            int counter = 0;
+
             for (Person person : persons) {
                 // Create person-profits {personProfit = [totalProfit / totalStock] * personTotalStock}
                 PersonProfit personProfit = new PersonProfit();
