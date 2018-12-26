@@ -7,6 +7,7 @@ import com.project.shareholder.util.Constants;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -58,6 +59,20 @@ public class PersonDaoImpl extends CommonHibernate<Person> implements PersonDao 
         } catch (Exception exception) {
             throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
         }
+    }
+
+    @Override
+    public double retrieveAllTotalStock() {
+        String sql = "select sum(p.totalStock) from Person p where p.active = true";
+        Query query = getCurrentSession().createQuery(sql);
+        return (double) query.getSingleResult();
+    }
+
+    @Override
+    public List<Person> retrieveActivePersons() {
+        String sql = "from Person p where p.active = true";
+        Query query = getCurrentSession().createQuery(sql, Person.class);
+        return query.getResultList();
     }
 
     @Override

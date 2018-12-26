@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class SharePeriodServiceImpl implements SharePeriodService {
@@ -109,7 +111,7 @@ public class SharePeriodServiceImpl implements SharePeriodService {
 
             // Update stock quantity of person-quarter
             double bonusStock = personQuarter.getBonusStock() + sharePeriodRequest.getStockQuantity();
-            personQuarter.setStockQuantity(bonusStock);
+            personQuarter.setBonusStock(bonusStock);
             personQuarterDao.updateObj(personQuarter);
 
             // Update person's total stock
@@ -121,5 +123,10 @@ public class SharePeriodServiceImpl implements SharePeriodService {
         }
 
         return sharePeriod;
+    }
+
+    @Override
+    public List<SharePeriod> list() {
+        return sharePeriodDao.retrieveAll();
     }
 }

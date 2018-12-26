@@ -1,17 +1,18 @@
 package com.project.shareholder.service;
 
-import com.project.shareholder.dao.PersonDao;
-import com.project.shareholder.dao.RoleDao;
+import com.project.shareholder.dao.*;
 import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
-import com.project.shareholder.model.Person;
-import com.project.shareholder.model.Role;
+import com.project.shareholder.model.*;
 import com.project.shareholder.request.PersonRequest;
 import com.project.shareholder.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,6 +27,15 @@ public class PersonServiceImpl implements PersonService {
     @Autowired
     private RoleDao roleDao;
 
+    @Autowired
+    private QuarterDao quarterDao;
+
+    @Autowired
+    private PersonQuarterDao personQuarterDao;
+
+    @Autowired
+    private SharePeriodDao sharePeriodDao;
+
     @Override
     public Person create(PersonRequest personRequest) throws DatabaseException {
         Person person = new Person();
@@ -39,7 +49,8 @@ public class PersonServiceImpl implements PersonService {
         person.setGender(personRequest.isGender());
         person.setPersonalId(personRequest.getPersonalId());
         person.setPhoneNumber(personRequest.getPhoneNumber());
-//@fix
+        person.setTotalProfit(0);
+        person.setTotalStock(0);
         try {
             // Set role
             Role role;
@@ -47,20 +58,84 @@ public class PersonServiceImpl implements PersonService {
             person.setRole(role);
 
             // Add referral
+            Date currentDate = new Date();
+            Quarter quarter = quarterDao.retrieveByPeriod(currentDate);
             String referrerUsername = personRequest.getReferrerUsername();
+            double stockQuantity = quarter.getStockQuantity();
+            Person referrer = new Person();
+            boolean hasReferrer = false;
             if (!referrerUsername.trim().isEmpty()) {
-                Person referrer = personDao.retrieveByUsername(referrerUsername);
+                referrer = personDao.retrieveByUsername(referrerUsername);
                 if (null == referrer) {
                     throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
                 }
 
+                hasReferrer = true;
                 person.setRefererId(referrer.getId());
             }
 
             // Create new person
             personDao.createObj(person);
+
+            // Update referrer-quarter if referrer exists
+            if (hasReferrer) {
+                // Update stock quantity of referrer-quarter
+                PersonQuarter referrerQuarter = personQuarterDao.retrieveByPersonQuarter(referrer, quarter);
+                referrerQuarter.setBonusStock(referrerQuarter.getBonusStock() + stockQuantity/2);
+                ArrayList<UUID> referralIds = new ArrayList<>();
+                if (null != referrerQuarter.getReferralIds()) {
+                    referralIds = referrerQuarter.getReferralIds();
+                }
+
+                referralIds.add(person.getId());
+                referrerQuarter.setReferralIds(referralIds);
+                personQuarterDao.updateObj(referrerQuarter);
+
+                // Create share-period
+                Timestamp currentTime = new Timestamp(new Date().getTime());
+                SharePeriod sharePeriod = new SharePeriod();
+                sharePeriod.setPersonQuarter(referrerQuarter);
+                sharePeriod.setShareAction(ShareAction.BONUS);
+                sharePeriod.setPeriod(currentTime);
+                sharePeriod.setStockQuantity(stockQuantity/2);
+                sharePeriod.setNote("Bonus for referring");
+                sharePeriodDao.createObj(sharePeriod);
+
+                // Update referrer's total stock
+                referrer.setTotalStock(referrer.getTotalStock() + stockQuantity/2);
+                personDao.updateObj(referrer);
+            }
+
+            // Create person-quarter
+            PersonQuarter personQuarter = new PersonQuarter();
+            personQuarter.setPerson(person);
+            personQuarter.setQuarter(quarter);
+            personQuarter.setBonusStock(0);
+            personQuarter.setStockQuantity(0);
+            personQuarter.setReferralIds(null);
+            personQuarter.setSharePeriods(null);
+            personQuarter.setNote(null);
+            personQuarterDao.createObj(personQuarter);
+
+            // Create share-period
+            Timestamp currentTime = new Timestamp(new Date().getTime());
+            SharePeriod sharePeriod = new SharePeriod();
+            sharePeriod.setPersonQuarter(personQuarter);
+            sharePeriod.setShareAction(ShareAction.ADD);
+            sharePeriod.setPeriod(currentTime);
+            sharePeriod.setStockQuantity(stockQuantity);
+            sharePeriod.setNote("Initalize share");
+            sharePeriodDao.createObj(sharePeriod);
+
+            // Update stock quantity of person-quarter
+            personQuarter.setStockQuantity(personQuarter.getStockQuantity() + stockQuantity);
+            personQuarterDao.updateObj(personQuarter);
+
+            // Update person's total stock
+            person.setTotalStock(person.getTotalStock() + stockQuantity);
+            personDao.updateObj(person);
         } catch (Exception exception) {
-            throw new DatabaseException(Constants.DATABASE_MESSAGE);
+            throw new DatabaseException(exception.getCause().toString());
         }
 
         return person;

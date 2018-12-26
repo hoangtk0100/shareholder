@@ -1,7 +1,5 @@
 package com.project.shareholder.request;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -11,9 +9,10 @@ public class ProfitRequest {
     @NotNull(message = "Profit must not be empty")
     private double totalProfit;
 
-    @NotBlank(message = "Period must not be empty")
+    @NotNull(message = "Period must not be empty")
     private String period;
 
+    // Getter and setter methods
     public UUID getId() {
         return id;
     }

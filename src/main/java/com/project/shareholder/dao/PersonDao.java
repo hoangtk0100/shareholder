@@ -5,6 +5,7 @@ import com.project.shareholder.exception.NotFoundException;
 import com.project.shareholder.model.Person;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 public interface PersonDao extends CommonHibernateInterface<Serializable, Person> {
@@ -19,4 +20,10 @@ public interface PersonDao extends CommonHibernateInterface<Serializable, Person
 
     // Retrieve person by personal id
     Person retrieveByPersonalId(String personalId) throws NotFoundException;
+
+    // Retrieve all total stock
+    double retrieveAllTotalStock();
+
+    // Retrieve all active person
+    List<Person> retrieveActivePersons();
 }

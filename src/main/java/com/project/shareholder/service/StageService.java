@@ -26,6 +26,9 @@ public interface StageService {
     // Retrieve stage by period
     Stage retrieveByPeriod(String period) throws NotFoundException;
 
+    // Retrieve stage by name
+    Stage retrieveByName(String name) throws NotFoundException;
+
     // Retrieve all stages
     List<Stage> list();
 }

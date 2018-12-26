@@ -102,6 +102,11 @@ public class StageServiceImpl implements StageService {
     }
 
     @Override
+    public Stage retrieveByName(String name) throws NotFoundException {
+        return stageDao.retrieveByName(name);
+    }
+
+    @Override
     public List<Stage> list() {
         return stageDao.retrieveAll();
     }

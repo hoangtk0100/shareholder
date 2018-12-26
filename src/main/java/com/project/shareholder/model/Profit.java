@@ -14,7 +14,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "profit",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"id"}),
+                             @UniqueConstraint(columnNames = {"period"})
         }
 )
 
@@ -35,7 +36,7 @@ public class Profit extends CommonSerialize {
     @Convert(
             converter = YearMonthDateAttributeConverter.class
     )
-    private YearMonth period = YearMonth.now();
+    private YearMonth period;
 
     @OneToMany(mappedBy = "profit", fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
