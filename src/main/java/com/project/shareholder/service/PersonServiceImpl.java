@@ -124,7 +124,7 @@ public class PersonServiceImpl implements PersonService {
             sharePeriod.setShareAction(ShareAction.ADD);
             sharePeriod.setPeriod(currentTime);
             sharePeriod.setStockQuantity(stockQuantity);
-            sharePeriod.setNote("Initalize share");
+            sharePeriod.setNote("Initialize share");
             sharePeriodDao.createObj(sharePeriod);
 
             // Update stock quantity of person-quarter

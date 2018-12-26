@@ -99,6 +99,8 @@ public class MockDataController {
                     personRequest.setRoleName("USER");
                     personRequest.setReferrerUsername("");
                 }
+
+                Thread.sleep(1000L * 2);
                 personService.create(personRequest);
             }
 

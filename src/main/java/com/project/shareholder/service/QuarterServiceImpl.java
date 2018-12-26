@@ -1,9 +1,13 @@
 package com.project.shareholder.service;
 
+import com.project.shareholder.dao.PersonDao;
+import com.project.shareholder.dao.PersonQuarterDao;
 import com.project.shareholder.dao.QuarterDao;
 import com.project.shareholder.dao.StageDao;
 import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
+import com.project.shareholder.model.Person;
+import com.project.shareholder.model.PersonQuarter;
 import com.project.shareholder.model.Quarter;
 import com.project.shareholder.model.Stage;
 import com.project.shareholder.request.QuarterRequest;
@@ -27,6 +31,12 @@ public class QuarterServiceImpl implements QuarterService {
     @Autowired
     private StageDao stageDao;
 
+    @Autowired
+    private PersonDao personDao;
+
+    @Autowired
+    private PersonQuarterDao personQuarterDao;
+
     // Create a new quarter
     @Override
     public Quarter create(QuarterRequest quarterRequest) throws DatabaseException {
@@ -38,9 +48,30 @@ public class QuarterServiceImpl implements QuarterService {
         quarter.setDateEndedAt(convertStringToDate(quarterRequest.getDateEndedAt()));
         quarter.setNote(quarterRequest.getNote());
         try {
+            // Check if stage exists
             Stage stage = stageDao.retrieveById(quarterRequest.getStageId());
+            if(null == stage) {
+                throw new NotFoundException(Constants.NOT_FOUND_MESSAGE);
+            }
+
+            // Create quarter
             quarter.setStage(stage);
             quarterDao.createObj(quarter);
+
+            // Create person-quarter
+            List<Person> persons = personDao.retrieveAll();
+            for(Person person : persons) {
+                if(!person.isActive()) {
+                    continue;
+                }
+                PersonQuarter personQuarterIndex = new PersonQuarter();
+                personQuarterIndex.setQuarter(quarter);
+                personQuarterIndex.setPerson(person);
+                personQuarterIndex.setBonusStock(0);
+                personQuarterIndex.setStockQuantity(0);
+                personQuarterIndex.setReferralQuantity(0);
+                personQuarterDao.createObj(personQuarterIndex);
+            }
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }
