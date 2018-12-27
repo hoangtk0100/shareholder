@@ -31,12 +31,6 @@ public class QuarterServiceImpl implements QuarterService {
     @Autowired
     private StageDao stageDao;
 
-    @Autowired
-    private PersonDao personDao;
-
-    @Autowired
-    private PersonQuarterDao personQuarterDao;
-
     // Create a new quarter
     @Override
     public Quarter create(QuarterRequest quarterRequest) throws DatabaseException {
@@ -57,21 +51,6 @@ public class QuarterServiceImpl implements QuarterService {
             // Create quarter
             quarter.setStage(stage);
             quarterDao.createObj(quarter);
-
-            // Create person-quarter
-            List<Person> persons = personDao.retrieveAll();
-            for(Person person : persons) {
-                if(!person.isActive()) {
-                    continue;
-                }
-                PersonQuarter personQuarterIndex = new PersonQuarter();
-                personQuarterIndex.setQuarter(quarter);
-                personQuarterIndex.setPerson(person);
-                personQuarterIndex.setBonusStock(0);
-                personQuarterIndex.setStockQuantity(0);
-                personQuarterIndex.setReferralQuantity(0);
-                personQuarterDao.createObj(personQuarterIndex);
-            }
         } catch (Exception exception) {
             throw new DatabaseException(Constants.DATABASE_MESSAGE);
         }

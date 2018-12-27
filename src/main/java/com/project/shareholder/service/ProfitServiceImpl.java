@@ -1,23 +1,24 @@
 package com.project.shareholder.service;
 
-import com.project.shareholder.dao.PersonDao;
-import com.project.shareholder.dao.PersonProfitDao;
-import com.project.shareholder.dao.ProfitDao;
+import com.project.shareholder.dao.*;
 import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NotFoundException;
-import com.project.shareholder.model.Person;
-import com.project.shareholder.model.PersonProfit;
-import com.project.shareholder.model.Profit;
+import com.project.shareholder.model.*;
 import com.project.shareholder.request.ProfitRequest;
+import com.project.shareholder.request.SharePeriodRequest;
 import com.project.shareholder.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.util.*;
 
 import static com.project.shareholder.util.Utility.convertStringToYearMonth;
+import static com.project.shareholder.util.Utility.convertYearMonthStringToDate;
 
 @Service
 @Transactional
@@ -31,8 +32,95 @@ public class ProfitServiceImpl implements ProfitService {
     @Autowired
     private PersonProfitDao personProfitDao;
 
+    @Autowired
+    private QuarterDao quarterDao;
+
+    @Autowired
+    private PersonQuarterDao personQuarterDao;
+
+    @Autowired
+    private SharePeriodService sharePeriodService;
+
     @Override
     public Profit create(ProfitRequest profitRequest) throws DatabaseException {
+        // Check current quarter
+        YearMonth currentYearMonth = YearMonth.now();
+        Date currentPeriod = convertYearMonthStringToDate(currentYearMonth.toString());
+        Quarter quarter = new Quarter();
+        try {
+            quarter = quarterDao.retrieveByPeriod(currentPeriod);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("----truoc quarter yearmonth: " );
+        YearMonth quarterStartedYearMonth = YearMonth.from(Instant.ofEpochMilli(quarter.getDateEndedAt().getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate());
+        System.out.println("----quarter yearmonth: " + quarterStartedYearMonth);
+
+        // Check if current year month is startMonth of current quarter
+        if(quarterStartedYearMonth.equals(currentYearMonth)) {
+            // Set quarterly bonus | 15% current quarter's stock quantity
+            List<Person> persons = personDao.retrieveAll();
+            double percentBonusStock = 15;
+            Timestamp currentTime;
+            for(Person person : persons) {
+                System.out.println("----trc khi tao shareperiod ");
+                PersonQuarter personQuarter = new PersonQuarter();
+                try {
+                    personQuarter = personQuarterDao.retrieveByPersonPeriod(person, currentPeriod);
+                } catch (NotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                currentTime = new Timestamp(new Date().getTime());
+                SharePeriodRequest sharePeriodRequest = new SharePeriodRequest();
+                sharePeriodRequest.setNote("Quarterly bonus");
+                sharePeriodRequest.setPeriod(currentTime);
+                sharePeriodRequest.setShareAction(ShareAction.BONUS);
+                sharePeriodRequest.setPersonQuarterId(personQuarter.getId());
+                sharePeriodRequest.setStockQuantity((percentBonusStock / 100) * quarter.getStockQuantity());
+                System.out.println("----trc khi bonus shareperiod ");
+                sharePeriodService.bonus(sharePeriodRequest);
+                System.out.println("----sau khi bonus shareperiod ");
+            }
+
+            // Set referring bonus | 10% referral's shares last quarter
+            Calendar now = Calendar.getInstance();
+            now.add(Calendar.MONTH, -1);
+            try {
+                Quarter lastQuarter = quarterDao.retrieveByPeriod(convertYearMonthStringToDate(now.get(Calendar.YEAR)
+                        + "-" + now.get(Calendar.MONTH)));
+                List<PersonQuarter> personQuarters = personQuarterDao.retrieveByQuarter(lastQuarter);
+                for(PersonQuarter personQuarter : personQuarters) {
+                    double bonusStock = 0;
+                    ArrayList<UUID> referralIds = personQuarter.getReferralIds();
+                    if(null != referralIds) {
+                        for (UUID referralId : referralIds) {
+                            Person person = personDao.retrieveById(referralId);
+                            bonusStock += (0.1 * person.getTotalStock());
+                        }
+                    }
+
+                    currentTime = new Timestamp(new Date().getTime());
+                    SharePeriodRequest sharePeriodRequest = new SharePeriodRequest();
+                    sharePeriodRequest.setNote("Referring bonus");
+                    sharePeriodRequest.setPeriod(currentTime);
+                    sharePeriodRequest.setShareAction(ShareAction.BONUS);
+                    sharePeriodRequest.setPersonQuarterId(personQuarter.getId());
+                    sharePeriodRequest.setStockQuantity(bonusStock);
+                    System.out.println("----trc khi referring bonus shareperiod ");
+                    sharePeriodService.bonus(sharePeriodRequest);
+                    System.out.println("----sau khi referring bonus shareperiod ");
+                }
+            } catch (NotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("----trc khi tao profit ");
+        //////////////////////////////////////////
         Profit profit = new Profit();
         try {
             // Create new profit
@@ -183,7 +271,7 @@ public class ProfitServiceImpl implements ProfitService {
                 person.setPersonProfits(personProfitsIndex);
                 person.setTotalProfit(person.getTotalProfit() + periodProfit);
                 personDao.updateObj(person);
-
+                System.out.println("----created");
                 // Remove personProfitsIndex data
                 personProfitsIndex.clear();
             }

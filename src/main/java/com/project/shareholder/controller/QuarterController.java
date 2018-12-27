@@ -3,8 +3,13 @@ package com.project.shareholder.controller;
 import com.project.shareholder.exception.DatabaseException;
 import com.project.shareholder.exception.NetworkException;
 import com.project.shareholder.exception.NotFoundException;
+import com.project.shareholder.model.Person;
+import com.project.shareholder.model.PersonQuarter;
 import com.project.shareholder.model.Quarter;
+import com.project.shareholder.request.PersonQuarterRequest;
 import com.project.shareholder.request.QuarterRequest;
+import com.project.shareholder.service.PersonQuarterService;
+import com.project.shareholder.service.PersonService;
 import com.project.shareholder.service.QuarterService;
 import com.project.shareholder.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +25,12 @@ public class QuarterController {
     @Autowired
     private QuarterService quarterService;
 
+    @Autowired
+    private PersonService personService;
+
+    @Autowired
+    private PersonQuarterService personQuarterService;
+
     // Create new quarter
     @PostMapping("/create")
     public Quarter create(@Valid @RequestBody QuarterRequest quarterRequest, Errors errors) throws DatabaseException {
@@ -29,7 +40,38 @@ public class QuarterController {
             exception.printStackTrace();
         }
 
-        return quarterService.create(quarterRequest);
+        Quarter quarter = quarterService.create(quarterRequest);
+
+        // Create person-quarter
+        List<Person> persons = personService.list();
+        if(null != persons) {
+            for(Person person : persons) {
+                if(!person.isActive()) {
+                    continue;
+                }
+
+                PersonQuarter personQuarter = null;
+                try {
+                    personQuarter = personQuarterService.retrieveByPersonQuarter(person.getId().toString(), quarter.getId().toString());
+                } catch (NotFoundException e) {
+                    e.printStackTrace();
+                }
+                if(null != personQuarter) {
+                    continue;
+                }
+
+                // Create person-quarter
+                PersonQuarterRequest personQuarterRequest = new PersonQuarterRequest();
+                personQuarterRequest.setQuarterId(quarter.getId());
+                personQuarterRequest.setPersonId(person.getId());
+                personQuarterRequest.setBonusStock(0);
+                personQuarterRequest.setStockQuantity(0);
+                personQuarterRequest.setReferralQuantity(0);
+                personQuarterService.create(personQuarterRequest);
+            }
+        }
+
+        return quarter;
     }
 
     // Update quarter

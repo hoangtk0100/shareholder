@@ -104,7 +104,7 @@ public class MockDataController {
                 personService.create(personRequest);
             }
 
-            // Mock share period (substract)
+            // Mock share period (subtract)
             PersonQuarter personQuarter01 = personQuarterService.list().get(0);
             Timestamp currentTime = new Timestamp(new Date().getTime());
             SharePeriodRequest sharePeriodRequest = new SharePeriodRequest();
@@ -120,7 +120,7 @@ public class MockDataController {
             profitRequest.setTotalProfit(200);
             profitRequest.setPeriod(("2018-02"));
             profitService.create(profitRequest);
-
+//
             // Mock profit with current year month
             ProfitRequest secondProfitRequest = new ProfitRequest();
             secondProfitRequest.setTotalProfit(1000);
