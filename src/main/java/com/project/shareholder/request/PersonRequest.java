@@ -32,6 +32,9 @@ public class PersonRequest {
     @NotBlank(message = "Email must not be empty")
     private String email;
 
+//    @NotNull(message = "Creator must not be null")
+    private UUID creatorId;
+
     private String avatar;
     private double totalStock;
     private double totalProfit;
@@ -174,5 +177,13 @@ public class PersonRequest {
 
     public void setPersonQuarterIds(List<UUID> personQuarterIds) {
         this.personQuarterIds = personQuarterIds;
+    }
+
+    public UUID getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(UUID creatorId) {
+        this.creatorId = creatorId;
     }
 }

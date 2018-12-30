@@ -63,17 +63,30 @@ public class MockDataController {
                 stageService.create(stageRequest);
             }
 
-            // Mock quarters
+            // Mock quarters in 2018
             String months[] = new String[]{"01-01", "03-31", "04-01", "06-30", "07-01", "09-30", "10-01", "12-31"};
-            int monthIndex = 0;
+            int month2018Index = 0;
             Stage stage01 = stageService.retrieveByName("stage01");
             for (int index = 0; index < 4; ++index) {
                 QuarterRequest quarterRequest = new QuarterRequest();
                 quarterRequest.setStageId(stage01.getId());
                 quarterRequest.setStockQuantity(50);
                 quarterRequest.setName("quarter0" + index);
-                quarterRequest.setDateStartedAt("2018-" + months[monthIndex++]);
-                quarterRequest.setDateEndedAt("2018-" + months[monthIndex++]);
+                quarterRequest.setDateStartedAt("2018-" + months[month2018Index++]);
+                quarterRequest.setDateEndedAt("2018-" + months[month2018Index++]);
+                quarterService.create(quarterRequest);
+            }
+
+            // Mock quarters in 2018
+            int month2019Index = 0;
+            Stage stage02 = stageService.retrieveByName("stage02");
+            for (int index = 0; index < 4; ++index) {
+                QuarterRequest quarterRequest = new QuarterRequest();
+                quarterRequest.setStageId(stage02.getId());
+                quarterRequest.setStockQuantity(50);
+                quarterRequest.setName("quarter0" + index);
+                quarterRequest.setDateStartedAt("2019-" + months[month2019Index++]);
+                quarterRequest.setDateEndedAt("2019-" + months[month2019Index++]);
                 quarterService.create(quarterRequest);
             }
 
@@ -100,7 +113,6 @@ public class MockDataController {
                     personRequest.setReferrerUsername("");
                 }
 
-                Thread.sleep(1000L * 2);
                 personService.create(personRequest);
             }
 
@@ -120,7 +132,7 @@ public class MockDataController {
             profitRequest.setTotalProfit(200);
             profitRequest.setPeriod(("2018-02"));
             profitService.create(profitRequest);
-//
+
             // Mock profit with current year month
             ProfitRequest secondProfitRequest = new ProfitRequest();
             secondProfitRequest.setTotalProfit(1000);

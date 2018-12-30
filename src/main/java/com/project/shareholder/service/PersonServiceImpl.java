@@ -118,6 +118,7 @@ public class PersonServiceImpl implements PersonService {
             personQuarterDao.createObj(personQuarter);
 
             // Create share-period
+            Thread.sleep(50);
             Timestamp currentTime = new Timestamp(new Date().getTime());
             SharePeriod sharePeriod = new SharePeriod();
             sharePeriod.setPersonQuarter(personQuarter);

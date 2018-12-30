@@ -54,7 +54,7 @@ public class ProfitServiceImpl implements ProfitService {
         }
 
         System.out.println("----truoc quarter yearmonth: " );
-        YearMonth quarterStartedYearMonth = YearMonth.from(Instant.ofEpochMilli(quarter.getDateEndedAt().getTime())
+        YearMonth quarterStartedYearMonth = YearMonth.from(Instant.ofEpochMilli(quarter.getDateStartedAt().getTime())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate());
         System.out.println("----quarter yearmonth: " + quarterStartedYearMonth);
@@ -67,9 +67,10 @@ public class ProfitServiceImpl implements ProfitService {
             Timestamp currentTime;
             for(Person person : persons) {
                 System.out.println("----trc khi tao shareperiod ");
+                System.out.println("----period : " + currentPeriod);
                 PersonQuarter personQuarter = new PersonQuarter();
                 try {
-                    personQuarter = personQuarterDao.retrieveByPersonPeriod(person, currentPeriod);
+                    personQuarter = personQuarterDao.retrieveByPersonQuarter(person, quarter);
                 } catch (NotFoundException e) {
                     e.printStackTrace();
                 }
