@@ -8,7 +8,7 @@ import com.project.shareholder.util.Constants;
 import com.project.shareholder.util.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +22,7 @@ public class AuthenticationController {
     @Autowired
     private LoginService loginService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Person login(@Valid @RequestBody LoginRequest loginRequest, Errors errors) throws NotFoundException {
         try {
             // Validate input
